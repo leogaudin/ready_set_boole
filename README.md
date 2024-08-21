@@ -78,7 +78,7 @@ Let's take the following example:
 $$
 \begin{array}{r}
   50 \\
-+ 65 \\
+\+ 65 \\
 \hline
   115 \\
 \end{array}
@@ -94,7 +94,7 @@ $$
 \begin{array}{r}
   ^1	& & \\
   & 5 & 0 \\
-+ & 6 & 5 \\
+\+ & 6 & 5 \\
 \hline
   1 & 1 & 5 \\
 \end{array}
@@ -109,7 +109,7 @@ Let's take the following example of $5 + 6 = 11$ in base 2:
 $$
 \begin{array}{r}
   101 \\
-+ 110 \\
+\+ 110 \\
 \hline
   1011 \\
 \end{array}
@@ -125,7 +125,7 @@ $$
 \begin{array}{r}
   ^1	& & \\
   & 1 & 0 & 1 \\
-+ & 1 & 1 & 0 \\
+\+ & 1 & 1 & 0 \\
 \hline
   1 & 0 & 1 & 1 \\
 \end{array}
@@ -172,7 +172,7 @@ The AND operation is a bitwise operation that returns $1$ if both bits are $1$, 
 
 $$
 \begin{array}{c|c|c}
-  A & B & A \& B \\
+  A & B & A \\& B \\
   \hline
   0 & 0 & 0 \\
   0 & 1 & 0 \\
@@ -187,7 +187,7 @@ $$
 \begin{array}{c|c}
   5 & 101 \\
   6 & 110 \\
-  5 \& 6 & 100 \\
+  5 \\& 6 & 100 \\
 \end{array}
 $$
 
@@ -212,7 +212,7 @@ $$
 \begin{array}{r}
   ^1	& & \\
   & 1 & 0 & 1 \\
-+ & 1 & 1 & 0 \\
+\+ & 1 & 1 & 0 \\
 \hline
   1 & 0 & 1 & 1 \\
 \end{array}
@@ -234,7 +234,7 @@ If we AND them and left shift the result, we get:
 $$
 \begin{array}{r}
   & 1 & 0 & 1 \\
-\& & 1 & 1 & 0 \\
+\\& & 1 & 1 & 0 \\
 \hline
   & 1 & 0 & 0 \\
 \hline
