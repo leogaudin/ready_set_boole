@@ -1,5 +1,4 @@
 pub fn adder(a: u32, b: u32) -> u32 {
-
 	let mut result: u32 = a ^ b;
 	let mut carry: u32 = a & b;
 
@@ -17,7 +16,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn add_pairs() {
+    fn test_adder() {
 		let pairs = [
 			(32, 1241),
 			(16, 2142),
