@@ -78,7 +78,7 @@ Let's take the following example:
 $$
 \begin{array}{r}
   50 \\
-\\+ 65 \\
+\+ 65 \\
 \hline
   115 \\
 \end{array}
@@ -94,7 +94,7 @@ $$
 \begin{array}{r}
   ^1	& & \\
   & 5 & 0 \\
-\\+ & 6 & 5 \\
+\+ & 6 & 5 \\
 \hline
   1 & 1 & 5 \\
 \end{array}
@@ -109,7 +109,7 @@ Let's take the following example of $5 + 6 = 11$ in base 2:
 $$
 \begin{array}{r}
   101 \\
-\\+ 110 \\
+\+ 110 \\
 \hline
   1011 \\
 \end{array}
@@ -125,7 +125,7 @@ $$
 \begin{array}{r}
   ^1	& & \\
   & 1 & 0 & 1 \\
-\\+ & 1 & 1 & 0 \\
+\+ & 1 & 1 & 0 \\
 \hline
   1 & 0 & 1 & 1 \\
 \end{array}
@@ -212,7 +212,7 @@ $$
 \begin{array}{r}
   ^1	& & \\
   & 1 & 0 & 1 \\
-\\+ & 1 & 1 & 0 \\
+\+ & 1 & 1 & 0 \\
 \hline
   1 & 0 & 1 & 1 \\
 \end{array}
