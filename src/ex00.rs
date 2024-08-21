@@ -20,7 +20,7 @@ mod tests {
 		let pairs = [
 			(32, 1241),
 			(16, 2142),
-			(42, 24412)
+			(42, std::u32::MAX - 42),
 		];
 		for pair in pairs {
 			assert_eq!(

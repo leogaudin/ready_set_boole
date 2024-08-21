@@ -2,9 +2,9 @@
 
 ## Table of Contents
 
-- [Exercises](#exercises)
-	- [00 - Adder](#00---adder)
-	- [01 - Subtractor](#01---subtractor)
+- [Exercises](#exercises) 🏋🏻
+	- [00 - Adder](#00---adder) ➕
+	- [01 - Multiplier](#01---multiplier) ✖️
 - [Resources](#resources) 📖
 
 # Exercises
