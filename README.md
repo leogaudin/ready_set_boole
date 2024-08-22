@@ -260,6 +260,150 @@ $$
 >
 > Good luck implementing it for multiple carries!
 
+## 01 - Multiplier
+
+> You must write a function that takes as parameters two natural numbers a and b and returns one natural number that equals a * b. However the only operations you’re allowed to use are:
+>
+> - `&` (bitwise AND)
+> - `|` (bitwise OR)
+> - `^` (bitwise XOR)
+> - `<<` (bitwise left shift)
+> - `>>` (bitwise right shift)
+> - `=` (assignment)
+> - `==`, `!=`, `<`, `>`, `<=`, `>=` (comparison)
+
+### Quick and dirty solution
+
+If you are not familiar with bitwise operations, you might be tempted to use a loop to add `a` to a result `b` times.
+
+```rust
+pub fn multiplier(a: u32, b: u32) -> u32 {
+	let mut result = 0;
+
+	for _ in 0..b {
+		result = adder(result, a);
+	}
+
+	return result;
+}
+```
+
+This works. Literally. You can submit it.
+
+However, it has a complexity of $O(b)$.
+
+> i.e. it takes $b$ iterations to complete.
+>
+> We are working with `u32`, so the worst case scenario is $O(2^{32}) = O(4 294 967 296)$.
+
+### Bitwise solution
+
+There is a much faster way to multiply two numbers using bitwise operations.
+
+> Up to 4 million times faster, to be exact.
+
+Let's take the example of multiplying $53$ by $6$:
+
+$$
+\begin{array}{r}
+		&&&& 1 & 1 & 0 & 1 & 0 & 1 \\
+\times	&&&&&&		& 1 & 1 & 0 \\
+\hline
+		& 1 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 \\
+\end{array}
+$$
+
+If we look at it, we don't really see any pattern like in the previous exercise.
+
+However, putting the base 10 multiplication "on paper" as we did before, we can see that it's just a series of additions.
+
+$$
+6 * 53 = (6 * 3) + (6 * 50)
+$$
+
+$$
+\begin{array}{r}
+		&& 5 & 3 \\
+\times	&&& 6 \\
+\hline
+		&& 1& 8 \\
++		& 3 & 0 & 0 \\
+\hline
+		& 3 & 1 & 8 \\
+\end{array}
+$$
+
+$6 * 3$ equals $18$, and $6 * 50$ equals $300$.
+
+Rather, we can note it as $6 * 5$, adapted to the position of the $5$ (here $10^1$).
+
+To be clearer, I'm going to rewrite the operation as:
+
+$$
+6 * 53 \\
+= (6 * 3) * 10^0 + (6 * 5) * 10^1 \\
+= 6 * 3  + 6 * 50
+$$
+
+**To sum things up, we multiply the multiplicand by each digit of the multiplier, shifting appropriately the result to the left.**
+
+> e.g. $6 * 5$, shifted by $1$, so $6* 50$
+
+---
+
+Now, we need to do the same thing, in base 2.
+
+Unlike base 10, we only have two digits: $0$ and $1$. So we only have two scenarios when going through the digits of the multiplier:
+- If the digit is $0$, we add $0 * \text{multiplicand}$ to the result → **nothing to do**.
+- If the digit is $1$, **we add $1 * \text{multiplicand}$ to the result**.
+
+Let's take the example of multiplying $13$ with $11$:
+
+$$
+\begin{matrix}
+& & & & & 1&1&0&1 \\
+& & & &\times & \color{red}{\rm 1} & \color{purple}{\rm 0} & \color{blue}{\rm 1} & \color{green}{\rm 1}
+\end{matrix}
+$$
+
+If we break it down in partial products as we just saw:
+
+$$
+\begin{matrix} & & & & 1 & 1 & 0 & 1 & (1101 \times \color{green}{\rm 1}) \\
+~ & & & 1 & 1 & 0 & 1 & & (1101 \times \color{blue}{\rm 1} ~\text{shifted once})\\
+~ & & 0 & 0 & 0 & 0 &  & & (1101 \times \color{purple}{\rm 0} ~\text{shifted twice})\\
++ & 1& 1& 0 & 1 &  &  & & (1101 \times \color{red}{\rm 1} ~\text{shifted thrice})
+\end{matrix}
+$$
+
+In a more readable way:
+
+$$1101 + 11010 + 0 + 1101000$$
+
+> We added the implicit zeros that were absent in the previous example.
+
+Which is equal in base 10 to:
+
+$$13 + 26 + 0 + 104 = 143$$
+
+All good! We can see that the result is indeed equal to $13 * 11$.
+
+**To recap:**
+
+- We iterate through the bits of `b`.
+> We can do this by shifting `b` to the right by `i`.
+- If the bit is $1$, we add `a` to the result, shifted by the position `i` of the bit.
+
+> 💡 To check if the rightmost bit is 0 or 1, we can simply check if `rightmost_bit & 1 == 0`
+
+We now have our clean solution!
+
+> Note how we passed from a complexity of $O(b)$ to $O(n^2)$, where $n$ is the number of bits of `b`.
+>
+> We are working with `u32`, so the worst case scenario is $O(32^2) = O(1024)$.
+>
+> $4294967296 / 1024 = 4194304$, I did not lie when I said it was up to 4 million times faster.
+
 # Resources
 
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)
