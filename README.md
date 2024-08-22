@@ -369,10 +369,10 @@ $$
 If we break it down in partial products as we just saw:
 
 $$
-\begin{matrix} & & & & 1 & 1 & 0 & 1 & (1101 \times \color{green}{\rm 1}) \\
-~ & & & 1 & 1 & 0 & 1 & & (1101 \times \color{blue}{\rm 1} ~\text{shifted once})\\
-~ & & 0 & 0 & 0 & 0 &  & & (1101 \times \color{purple}{\rm 0} ~\text{shifted twice})\\
-\+ & 1& 1& 0 & 1 &  &  & & (1101 \times \color{red}{\rm 1} ~\text{shifted thrice})
+\begin{matrix} & & & & 1 & 1 & 0 & 1 & \color{green}(1101 \times 1) \\
+~ & & & 1 & 1 & 0 & 1 & & \color{blue}(1101 \times 1 ~\text{shifted once})\\
+~ & & 0 & 0 & 0 & 0 &  & & \color{purple}(1101 \times 0 ~\text{shifted twice})\\
++ & 1& 1& 0 & 1 &  &  & & \color{red}(1101 \times 1 ~\text{shifted thrice})
 \end{matrix}
 $$
 
