@@ -372,7 +372,7 @@ $$
 \begin{matrix} & & & & 1 & 1 & 0 & 1 & \color{green}(1101 \times 1) \\
 ~ & & & 1 & 1 & 0 & 1 & & \color{blue}(1101 \times 1 ~\text{shifted once})\\
 ~ & & 0 & 0 & 0 & 0 &  & & \color{purple}(1101 \times 0 ~\text{shifted twice})\\
-+ & 1& 1& 0 & 1 &  &  & & \color{red}(1101 \times 1 ~\text{shifted thrice})
+\+ & 1& 1& 0 & 1 &  &  & & \color{red}(1101 \times 1 ~\text{shifted thrice})
 \end{matrix}
 $$
 
