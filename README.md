@@ -337,7 +337,7 @@ $6 * 3$ equals $18$, and $6 * 50$ equals $300$.
 
 Rather, we can note it as $6 * 5$, adapted to the position of the $5$ (here $10^1$).
 
-To be clearer, I'm going to rewrite the operation as:
+To be clearer, let's rewrite the operation as:
 
 $$
 6 * 53 \\
@@ -402,7 +402,7 @@ We now have our clean solution!
 >
 > We are working with `u32`, so the worst case scenario is $O(32^2) = O(1024)$.
 >
-> $4294967296 / 1024 = 4194304$, I did not lie when I said it was up to 4 million times faster.
+> $4294967296 / 1024 = 4194304$, literally 4 million times faster.
 
 # Resources
 
