@@ -1,26 +1,39 @@
+use colored::Colorize;
+
 mod ex00;
 use ex00::adder;
 
 mod ex01;
 use ex01::multiplier;
 
+use rand::RngCore;
+
 fn main() {
-    println!("\nEX00 - ADDER");
-    for n in 0..42 {
-        let a: u32 = n;
-        let b: u32 = n * 2;
+    println!("\n{}", "EX00 - ADDER".normal().bold());
+    for _ in 0..42 {
+		let mut rng = rand::thread_rng();
+		let a: u32 = rng.next_u32() / 2;
+		let b: u32 = rng.next_u32() / 2;
         println!(
-            "{} + {} = {} (expected {})",
-            a, b, adder(a, b), a + b
-        );
+			"{}\t{} + {} = {}",
+			if adder(a, b) == a + b { "OK".green().bold() } else { "KO".red().bold() },
+			a,
+			b,
+			adder(a, b),
+		);
     }
-    println!("\nEX01 - MULTIPLIER");
-    for n in 0..42 {
-        let a: u32 = n;
-        let b: u32 = n * 420000;
+
+    println!("\n{}", "EX01 - MULTIPLIER".normal().bold());
+    for _ in 0..42 {
+		let mut rng = rand::thread_rng();
+		let a: u32 = rng.next_u32() / std::u16::MAX as u32;
+		let b: u32 = rng.next_u32() / std::u16::MAX as u32;
         println!(
-            "{} * {} = {} (expected {})",
-            a, b, multiplier(a, b), a * b
-        );
+			"{}\t{} * {} = {}",
+			if multiplier(a, b) == a * b { "OK".green().bold() } else { "KO".red().bold() },
+			a,
+			b,
+			multiplier(a, b),
+		);
     }
 }
