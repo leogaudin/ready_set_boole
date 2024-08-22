@@ -10,23 +10,3 @@ pub fn adder(a: u32, b: u32) -> u32 {
 
 	return result;
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-
-//     #[test]
-//     fn test_adder() {
-// 		let pairs = [
-// 			(32, 1241),
-// 			(16, 2142),
-// 			(42, std::u32::MAX - 42),
-// 		];
-// 		for pair in pairs {
-// 			assert_eq!(
-// 				adder(pair.0, pair.1),
-// 				pair.0 + pair.1
-// 			)
-// 		}
-// 	}
-// }
