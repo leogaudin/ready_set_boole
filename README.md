@@ -327,7 +327,7 @@ $$
 \times	&&& 6 \\
 \hline
 		&& 1& 8 \\
-+		& 3 & 0 & 0 \\
+\+		& 3 & 0 & 0 \\
 \hline
 		& 3 & 1 & 8 \\
 \end{array}
@@ -372,7 +372,7 @@ $$
 \begin{matrix} & & & & 1 & 1 & 0 & 1 & (1101 \times \color{green}{\rm 1}) \\
 ~ & & & 1 & 1 & 0 & 1 & & (1101 \times \color{blue}{\rm 1} ~\text{shifted once})\\
 ~ & & 0 & 0 & 0 & 0 &  & & (1101 \times \color{purple}{\rm 0} ~\text{shifted twice})\\
-+ & 1& 1& 0 & 1 &  &  & & (1101 \times \color{red}{\rm 1} ~\text{shifted thrice})
+\+ & 1& 1& 0 & 1 &  &  & & (1101 \times \color{red}{\rm 1} ~\text{shifted thrice})
 \end{matrix}
 $$
 
