@@ -409,3 +409,4 @@ We now have our clean solution!
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)
 - [📺 Binary Multiplication](https://www.youtube.com/watch?v=PjmWG_8b3os)
 - [💬 How can I perform multiplication, using bitwise operators?](https://stackoverflow.com/a/3722053/18370307)
+- [💬 Grade School Multiplication Algorithm for Binary Numbers explanation](https://math.stackexchange.com/a/1118159)
