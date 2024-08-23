@@ -5,7 +5,7 @@ pub fn gray_code(n: u32) -> u32 {
 	// Instead of initializing it in 32,
 	// we calculate the bit length to
 	// improve performance
-	while n >> length != 0 {
+	while n >> length != 0 && length < 31 {
 		length += 1;
 	}
 
