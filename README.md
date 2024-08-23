@@ -349,13 +349,13 @@ $$
 
 > e.g. $6 * 5$, shifted by $1$, so $6* 50$
 
----
-
 Now, we need to do the same thing, in base 2.
 
 Unlike base 10, we only have two digits: $0$ and $1$. So we only have two scenarios when going through the digits of the multiplier:
 - If the digit is $0$, we add $0 * \text{multiplicand}$ to the result → **nothing to do**.
 - If the digit is $1$, **we add $1 * \text{multiplicand}$ to the result**.
+
+#### Example
 
 Let's take the example of multiplying $13$ with $11$:
 
@@ -404,9 +404,52 @@ We now have our clean solution!
 >
 > $4294967296 / 1024 = 4194304$, literally 4 million times faster.
 
+## 02 - Gray Code
+
+> You must write a function that takes an integer n and returns its equivalent in Gray code.
+
+This exercise is simpler than the others in the sense that **it does not require us to convert decimal problems to Boolean algebra**.
+
+The Gray Code is a variant of binary that was invented to facilitate transmissions, by making each consecutive value different from its previous one by only one bit.
+
+> It's a bit confusing, but for example, $4$ in Gray code is written $0110$, and $5$ is written $0111$.
+>
+> Here for instance, only the last bit has changed. That is the concept of Gray code.
+
+The purpose of Gray code and its uses are more complex, but what really matters to us here is: **how do we translate normal binary to Gray code?**
+
+Well, it is actually quite simple now that we are comfortable with Boolean algebra.
+
+As said before, its recipe is just a set of bitwise operations:
+
+1. We initialize a number (our to-be Gray number) to 0
+3. We copy the most significant bit (the one all the way left) to this number
+4. We then append to the right of this number, the result of XOR on each bit and its neighbor to the right
+
+### Example
+
+To make it clearer, let's take the example of $13$, in binary $1101$.
+
+1. We initialize our Gray number to $0$.
+2. We copy the most significant bit (**1** 101) to our Gray number, so it becomes $1$.
+3. We XOR the first bit with the second bit: **11** 01.
+    - $1 \oplus 1 = 0$, so we append $0$ to our Gray number.
+    - **It becomes $10$**.
+4. We XOR the second bit with the third bit: 1 **10** 1.
+    - $1 \oplus 0 = 1$, so we append $1$ to our Gray number.
+    - **It becomes $101$**.
+5. We XOR the third bit with the fourth bit: 11 **01**.
+    - $0 \oplus 1 = 1$, so we append $1$ to our Gray number.
+    - **It becomes $1011$**.
+
+And that's it! We have successfully converted $1101$ to Gray code.
+
 # Resources
 
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)
 - [📺 Binary Multiplication](https://www.youtube.com/watch?v=PjmWG_8b3os)
+
 - [💬 How can I perform multiplication, using bitwise operators?](https://stackoverflow.com/a/3722053/18370307)
 - [💬 Grade School Multiplication Algorithm for Binary Numbers explanation](https://math.stackexchange.com/a/1118159)
+
+- [📺 How To Convert Gray Code to Binary and Binary to Gray Code](https://www.youtube.com/watch?v=cbmh1DPPQyI)
