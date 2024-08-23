@@ -407,7 +407,7 @@ We now have our clean solution!
 
 ## 02 - Gray Code
 
-> You must write a function that takes an integer n and returns its equivalent in Gray code.
+> You must write a function that takes an integer `n` and returns its equivalent in Gray code.
 
 This exercise is simpler than the others in the sense that **it does not require us to convert decimal problems to Boolean algebra**.
 
@@ -443,7 +443,11 @@ To make it clearer, let's take the example of $13$, in binary $1101$.
     - $0 \oplus 1 = 1$, so we append $1$ to our Gray number.
     - **It becomes $1011$**.
 
-And that's it! We have successfully converted $1101$ to Gray code.
+And that's it! We ended up with $13$ in Gray code, which is $1011$ in binary, and $11$ in decimal.
+
+> 💡 We are working with 32-bit integers, so you can either perform those operations 32 times, or determine the bit length $x$ and perform those operations $x$ times.
+>
+> We then get a complexity of $O(x)$, where $x$ cannot exceed $32$, and will most likely be much smaller (e.g. $O(4)$ for converting $13$).
 
 # Resources
 
