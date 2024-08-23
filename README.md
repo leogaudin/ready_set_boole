@@ -5,6 +5,7 @@
 - [Exercises](#exercises) 🏋🏻
 	- [00 - Adder](#00---adder) ➕
 	- [01 - Multiplier](#01---multiplier) ✖️
+  - [02 - Gray Code](#02---gray-code) 🔢
 - [Resources](#resources) 📖
 
 # Exercises
