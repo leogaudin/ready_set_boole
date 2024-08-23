@@ -443,7 +443,7 @@ To make it clearer, let's take the example of $13$, in binary $1101$.
     - $0 \oplus 1 = 1$, so we append $1$ to our Gray number.
     - **It becomes $1011$**.
 
-And that's it! We ended up with $13$ in Gray code, which is $1011$ in binary, and $11$ in decimal.
+And that's it! We're done converting $13$ in Gray code, which gives $1011$ in binary → $11$ in decimal.
 
 > 💡 We are working with 32-bit integers, so you can either perform those operations 32 times, or determine the bit length $x$ and perform those operations $x$ times.
 >
