@@ -97,7 +97,7 @@ fn main() {
 		"AB&C|",
 		"ABZK||=",
 		"1WAH1|&",
-		// "ABCDEFGHIJKLMN&|&|&|&|&|&",
+		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
 	];
 
 	for formula in formulas {
