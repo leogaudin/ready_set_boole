@@ -26,7 +26,7 @@ pub fn eval_formula(formula: &str) -> bool {
 			'&' => stack.push(a && b),
 			'|' => stack.push(a || b),
 			'^' => stack.push(a ^ b),
-			'>' => stack.push(!(a && !b)),
+			'>' => stack.push(!a || b),
 			'=' => stack.push(a == b),
 			_ => {
 				println!("Invalid operator");
