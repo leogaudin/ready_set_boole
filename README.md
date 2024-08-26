@@ -5,12 +5,18 @@
 - [Exercises](#exercises) 🏋🏻
 	- [00 - Adder](#00---adder) ➕
 	- [01 - Multiplier](#01---multiplier) ✖️
-  - [02 - Gray Code](#02---gray-code) 🔢
+	- [02 - Gray Code](#02---gray-code) 🔢
+	- [03 - Boolean Evaluation](#03---boolean-evaluation) 🧮
+	- [04 - Truth Table](#04---truth-table) 📊
 - [Resources](#resources) 📖
 
 # Exercises
 
 ## 00 - Adder
+
+```rust
+fn adder(a: u32, b: u32) -> u32;
+```
 
 > You must write a function that takes as parameters two natural numbers a and b and returns one natural number that equals a + b. However the only operations you’re allowed to use are:
 >
@@ -263,6 +269,10 @@ $$
 
 ## 01 - Multiplier
 
+```rust
+fn multiplier(a: u32, b: u32) -> u32;
+```
+
 > You must write a function that takes as parameters two natural numbers a and b and returns one natural number that equals a * b. However the only operations you’re allowed to use are:
 >
 > - `&` (bitwise AND)
@@ -407,6 +417,10 @@ We now have our clean solution!
 
 ## 02 - Gray Code
 
+```rust
+fn gray_code(n: u32) -> u32;
+```
+
 > You must write a function that takes an integer `n` and returns its equivalent in Gray code.
 
 This exercise is simpler than the others in the sense that **it does not require us to convert decimal problems to Boolean algebra**.
@@ -448,6 +462,119 @@ And that's it! We're done converting $13$ in Gray code, which gives $1011$ in bi
 > 💡 We are working with 32-bit integers, so you can either perform those operations 32 times, or determine the bit length $x$ and perform those operations $x$ times.
 >
 > We then get a complexity of $O(x)$, where $x$ cannot exceed $32$, and will most likely be much smaller (e.g. $O(4)$ for converting $13$).
+
+## 03 - Boolean Evaluation
+
+```rust
+fn eval_formula(formula: &str) -> bool;
+```
+
+> You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, evaluates this formula, then returns the result.
+
+This one is actually pretty simple.
+
+Reverse Polish Notation (RPN) is a way to write mathematical expressions without parentheses.
+
+> For example, the expression $(3 + 4) * 5$ can be written in RPN as `3 4 + 5 *`.
+
+It was already used in the Module 09 of the C++ modules, so you might be familiar with it.
+
+You basically push any operand you encounter to a stack, and when you encounter an operator, you pop the last two operands, apply the operator, and push the result back to the stack.
+
+Here is a simplified version of the algorithm:
+
+```rust
+for c in chars {
+	if c == operand {
+		stack.push(operand);
+		continue;
+	}
+
+	let b = stack.pop();
+	let a = stack.pop();
+
+	match c {
+		operator => stack.push(a operator b),
+		some_other_operator => stack.push(a some_other_operator b),
+		_ => {
+			println!("Invalid operator");
+			return false;
+		}
+	}
+}
+```
+
+> 💡 You can use a `Vec` as a stack, and use the `pop` and `push` methods to manipulate it, it's exactly the same.
+
+Now we just need to adapt this algorithm to what the exercise asks:
+
+```rust
+match c {
+	'&' => stack.push(a && b),
+	'|' => stack.push(a || b),
+	'^' => stack.push(a ^ b),
+	'>' => stack.push(!a || b),
+	'=' => stack.push(a == b),
+	_ => {
+		println!("Invalid operator");
+		return false;
+	}
+}
+```
+
+> Do not forget to handle the `!` operator, which is unary.
+
+And that's it! You have your solution.
+
+## 04 - Truth Table
+
+```rust
+fn print_truth_table(formula: &str);
+```
+
+> You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, and writes its truth table on the standard output.
+>
+> A formula can have up to 26 distinct variables (A...Z), one per letter. Each variable can be used several times.
+
+This exercise is a bit more complex than the previous one, but it does not really require any new concepts.
+
+We will not cover everything here, but we will give you a hint on how to proceed.
+
+### Steps
+
+1. **Determine the variables** in the formula.
+> 💡 To the accepted characters from the previous exercise, simply add those between the ASCII `A` and `Z`, and push any of them to a vector (watch out for duplicates).
+2. **Generate all possible sets of values** for the variables.
+> 💡 We will cover this later, but basically looking at all possible boolean combinations.
+>
+> This set of combination has a size of $2^n$, where $n$ is the number of variables.
+3. **Evaluate the formula** for each set of values.
+> 💡 You can use the previous exercise to evaluate the formula.
+>
+> Simply replace the variables by their values in the set, and evaluate the formula.
+>
+> For example, if you have the set `[true, false, true]`, replace `A` by `1`, `B` by `0`, and `C` by `1`, and call `eval_formula`.
+
+### Generating all possible sets of values
+
+To generate all possible sets of values for the variables, you can use a recursive function.
+
+Here is a simplified version of the algorithm:
+
+```rust
+fn generate_sets(variables: Vec<char>, set: Vec<bool>, index: usize) {
+	if index == variables.len() {
+		// Evaluate the formula with the set
+		return;
+	}
+
+	set[index] = true;
+	generate_sets(variables, set, index + 1);
+
+	set[index] = false;
+	generate_sets(variables, set, index + 1);
+}
+```
 
 # Resources
 
