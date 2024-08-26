@@ -487,18 +487,18 @@ Here is a simplified version of the algorithm:
 for c in chars {
 	if c == operand {
 		stack.push(operand);
-		continue;
 	}
+	else {
+		let b = stack.pop();
+		let a = stack.pop();
 
-	let b = stack.pop();
-	let a = stack.pop();
-
-	match c {
-		operator => stack.push(a operator b),
-		some_other_operator => stack.push(a some_other_operator b),
-		_ => {
-			println!("Invalid operator");
-			return false;
+		match c {
+			operator => stack.push(a operator b),
+			some_other_operator => stack.push(a some_other_operator b),
+			_ => {
+				println!("Invalid operator");
+				return false;
+			}
 		}
 	}
 }
