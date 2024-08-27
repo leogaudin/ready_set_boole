@@ -1,0 +1,5 @@
+// Double negation (A!! === A)
+// Equivalence (AB= === AB>BA>&)
+// Material condition (AB> === A!B|)
+// De Morgan's laws (AB|! === A!B!&), (AB&! === A!B!|)
+// Distributivity (ABC|& === AB&AC&|), (ABC&| === AB|AC|&)
