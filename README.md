@@ -585,3 +585,5 @@ fn generate_sets(variables: Vec<char>, set: Vec<bool>, index: usize) {
 - [💬 Grade School Multiplication Algorithm for Binary Numbers explanation](https://math.stackexchange.com/a/1118159)
 
 - [📺 How To Convert Gray Code to Binary and Binary to Gray Code](https://www.youtube.com/watch?v=cbmh1DPPQyI)
+
+- [📖 Implementing a Binary Tree in Rust for fun](https://rusty-ferris.pages.dev/blog/binary-tree-sum-of-values/)

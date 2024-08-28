@@ -1,4 +1,4 @@
-use crate::ex03::eval_formula;
+use crate::tree::{create_tree, eval_tree, replace_variables, TreeNodeRef};
 
 fn is_valid_formula(formula: &str) -> bool {
 	let valids: &str = "01!&|^>=";
@@ -41,8 +41,9 @@ fn print_sets(variables: Vec<char>, set: &mut Vec<bool>, index: usize, formula: 
 		for value in set.iter() {
 			print!("{}\t", *value as u8);
 		}
-		let replaced: String = replace_values(formula, set, &variables);
-		println!("{}", eval_formula(replaced.as_str()));
+		let tree: TreeNodeRef = replace_variables(create_tree(formula), set, &variables);
+		let eval: bool = eval_tree(tree.clone());
+		println!("{}", eval.to_string().as_str());
 		return;
 	}
 

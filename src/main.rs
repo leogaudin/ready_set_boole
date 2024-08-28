@@ -16,6 +16,9 @@ use ex03::eval_formula;
 mod ex04;
 use ex04::print_truth_table;
 
+mod tree;
+use tree::{create_tree, print_tree, TreeNodeRef};
+
 fn main() {
     println!("\n{}", "EX00 - ADDER".normal().bold());
     for _ in 0..42 {
@@ -102,5 +105,22 @@ fn main() {
 
 	for formula in formulas {
 		print_truth_table(formula);
+	}
+
+	println!("\n{}", "EX05 - NEGATION NORMAL FORM".normal().bold());
+	let formulas = [
+		"AB01&|",
+		"AB&C|",
+		"ABZK||=",
+		"1WAH1|&",
+		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
+	];
+
+	for formula in formulas {
+		// print_truth_table(formula);
+		let tree: TreeNodeRef = create_tree(formula);
+		print_tree(tree);
+		println!();
+		println!();
 	}
 }
