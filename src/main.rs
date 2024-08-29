@@ -14,10 +14,13 @@ mod ex03;
 use ex03::eval_formula;
 
 mod ex04;
-use ex04::print_truth_table;
+use ex04::{generate_truth_table, print_truth_table};
 
 mod tree;
-use tree::{create_tree, print_tree, TreeNodeRef};
+// use tree::{print_tree, tree_to_rpn, TreeNodeRef};
+
+mod ex05;
+use ex05::negation_normal_form;
 
 fn main() {
     println!("\n{}", "EX00 - ADDER".normal().bold());
@@ -109,18 +112,55 @@ fn main() {
 
 	println!("\n{}", "EX05 - NEGATION NORMAL FORM".normal().bold());
 	let formulas = [
-		"AB01&|",
-		"AB&C|",
-		"ABZK||=",
-		"1WAH1|&",
-		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
+		// Subject
+		"AB&!", // → A!B!|
+		"AB|!", // → A!B!&
+		"AB>", // → A!B|
+		"AB=", // → AB&A!B!&|
+		"AB|C&!", // → A!B!&C!|
+
+		// Double negation
+		"A!!B!!|C&!!",
+		"A!!B!!C!!&&",
+		"A!!B!!1|&",
+		// Equivalence
+		"AB=",
+		"AD&BE&=",
+		"AB&CD&=",
+		// Material condition
+		"AB>",
+		"AB=",
+		// De Morgan
+		"AB|C&!",
+		"AB&C|!",
+		// Negation position
+		"AB&!C|!",
+		"AB&CD&!E|&F|!",
 	];
 
 	for formula in formulas {
-		// print_truth_table(formula);
-		let tree: TreeNodeRef = create_tree(formula);
-		print_tree(tree);
-		println!();
+		let nnf: String = negation_normal_form(formula);
+		let allowed: Vec<char> = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01&|!".chars().collect();
+		println!(
+			"{}",
+			if generate_truth_table(formula) != generate_truth_table(nnf.as_str())
+				{ "TRUTH TABLES KO".red().bold() }
+			else
+				{ "TRUTH TABLES OK".green().bold() },
+		);
+		println!(
+			"{}",
+			if !(nnf.as_str().chars().all(|c| allowed.contains(&c)))
+				{ "NORMALIZATION KO".red().bold() }
+			else
+				{ "NORMALIZATION OK".green().bold() },
+		);
+
+		println!("Formula: {}", formula.normal().bold());
+		println!("RPN output: {}", nnf.as_str().normal().bold());
+		// print!("Tree: ");
+		// print_tree(nnf);
+		// println!();
 		println!();
 	}
 }
