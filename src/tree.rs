@@ -62,6 +62,11 @@ pub fn print_tree(node: TreeNodeRef) {
 	match node.get_val() {
 		Some(NodeValue::Value(value)) => print!("{}", value),
 		Some(NodeValue::Variable(variable)) => print!("{}", variable),
+		Some(NodeValue::Operator('!')) => {
+			print!("!(");
+			print_tree(node.get_left().unwrap());
+			print!(")");
+		}
 		Some(NodeValue::Operator(operator)) => {
 			print!("(");
 			print_tree(node.get_left().unwrap());
@@ -134,6 +139,11 @@ pub fn replace_variables(node: TreeNodeRef, values: &Vec<bool>, variables: &Vec<
 	let mut node = node.borrow_mut();
 	match node.get_val() {
 		Some(NodeValue::Value(_)) => node.clone(),
+		Some(NodeValue::Operator('!')) => {
+			let left: TreeNodeRef = replace_variables(node.get_left().unwrap(), values, variables);
+			node.set_left(left);
+			return node.clone();
+		}
 		Some(NodeValue::Operator(_)) => {
 			let left: TreeNodeRef = replace_variables(node.get_left().unwrap(), values, variables);
 			let right: TreeNodeRef = replace_variables(node.get_right().unwrap(), values, variables);
@@ -147,6 +157,24 @@ pub fn replace_variables(node: TreeNodeRef, values: &Vec<bool>, variables: &Vec<
 			let new_node: TreeNodeRef = TreeNode::new();
 			new_node.borrow_mut().set_val(NodeValue::Value(value));
 			return new_node;
+		}
+		None => panic!("Node has no value"),
+	}
+}
+
+pub fn tree_to_rpn(node: TreeNodeRef) -> String {
+	let node = node.borrow();
+	match node.get_val() {
+		Some(NodeValue::Value(value)) => format!("{}", value as u8),
+		Some(NodeValue::Variable(variable)) => format!("{}", variable),
+		Some(NodeValue::Operator('!')) => {
+			let left: String = tree_to_rpn(node.get_left().unwrap());
+			format!("{}!", left)
+		}
+		Some(NodeValue::Operator(operator)) => {
+			let left: String = tree_to_rpn(node.get_left().unwrap());
+			let right: String = tree_to_rpn(node.get_right().unwrap());
+			format!("{}{}{}", left, right, operator)
 		}
 		None => panic!("Node has no value"),
 	}
