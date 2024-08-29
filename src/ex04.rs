@@ -25,47 +25,43 @@ fn get_variables(formula: &str) -> Vec<char> {
 	return variables;
 }
 
-fn replace_values(formula: &str, combi: &Vec<bool>, variables: &Vec<char>) -> String {
-	let mut replaced: String = formula.to_string();
-
-	for (i, variable) in variables.into_iter().enumerate() {
-		let c: char = if combi[i] { '1' } else { '0' };
-		replaced = replaced.replace(variable.clone(), c.to_string().as_str());
-	}
-
-	return replaced;
-}
-
-fn print_sets(variables: Vec<char>, set: &mut Vec<bool>, index: usize, formula: &str) {
+fn generate_sets(variables: Vec<char>, set: &mut Vec<bool>, index: usize, formula: &str) -> String {
 	if index == variables.len() {
+		let mut line: String = String::new();
 		for value in set.iter() {
-			print!("{}\t", *value as u8);
+			line.push_str(&format!("{}\t", *value as u8));
 		}
 		let tree: TreeNodeRef = replace_variables(create_tree(formula), set, &variables);
 		let eval: bool = eval_tree(tree.clone());
-		println!("{}", eval.to_string().as_str());
-		return;
+		line.push_str(&eval.to_string());
+		line.push_str("\n");
+		return line;
 	}
 
 	set[index] = false;
-	print_sets(variables.clone(), set, index + 1, formula);
+	let mut line: String = generate_sets(variables.clone(), set, index + 1, formula);
 	set[index] = true;
-	print_sets(variables.clone(), set, index + 1, formula);
+	line.push_str(&generate_sets(variables.clone(), set, index + 1, formula));
+	return line;
 }
 
-pub fn print_truth_table(formula: &str) {
+pub fn generate_truth_table(formula: &str) -> String {
 	if !is_valid_formula(formula) {
-		println!("Invalid formula");
-		return;
+		return "Invalid formula".to_string();
 	}
 
 	let variables: Vec<char> = get_variables(formula);
+	let mut table: String = String::new();
 	for variable in &variables {
-		print!("{}\t", variable);
+		table.push_str(&format!("{}\t", variable));
 	}
-	print!("=\n\n");
+	table.push_str("=\n");
 
-	let mut initial_set: Vec<bool> = vec![false; variables.len()];
-	print_sets(variables, &mut initial_set, 0, formula);
-	print!("\n");
+	let mut set: Vec<bool> = vec![false; variables.len()];
+	table.push_str(&generate_sets(variables, &mut set, 0, formula));
+	return table;
+}
+
+pub fn print_truth_table(formula: &str) {
+	println!("{}", generate_truth_table(formula));
 }
