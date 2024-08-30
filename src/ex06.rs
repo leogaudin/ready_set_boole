@@ -1,11 +1,9 @@
 use crate::{ex05::tree_to_nnf, tree::{create_tree, tree_to_rpn, NodeValue, TreeNode, TreeNodeRef}};
 
-// Distributivity (ABC|& === AB&AC&|), (ABC&| === AB|AC|&)
 fn apply_cnf(node: TreeNodeRef) -> TreeNodeRef {
 	let node: TreeNodeRef = tree_to_nnf(node);
 	let node = node.borrow();
 	match node.get_val() {
-		// (A ∨ (B ∧ C)) ⇔ ((A ∨ B) ∧ (A ∨ C))
 		Some(NodeValue::Operator('|')) => {
 			let left: TreeNodeRef = apply_cnf(node.get_left().unwrap());
 			let right: TreeNodeRef = apply_cnf(node.get_right().unwrap());
@@ -88,14 +86,9 @@ fn move_conjunctions_to_end(formula: &str) -> String {
 }
 
 pub fn conjunctive_normal_form(formula: &str) -> String {
-
-	// Implement conjunctive normal form from negation normal form
-	// Return the conjunctive normal form as a string
 	let tree: TreeNodeRef = create_tree(formula);
 	let cnf: TreeNodeRef = apply_cnf(tree);
-	// let moved: String = tree_to_rpn(cnf).as_str().to_string();
 	let moved: String = move_conjunctions_to_end(tree_to_rpn(cnf).as_str());
-	// print_tree(cnf);
 
 	return moved;
 }
