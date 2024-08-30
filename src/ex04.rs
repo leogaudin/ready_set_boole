@@ -22,6 +22,8 @@ fn get_variables(formula: &str) -> Vec<char> {
 		}
 	}
 
+	variables.sort();
+
 	return variables;
 }
 

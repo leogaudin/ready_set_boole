@@ -24,6 +24,22 @@ impl TreeNode {
 		}))
 	}
 
+	pub fn new_from(value: NodeValue) -> TreeNodeRef {
+		Rc::new(RefCell::new(TreeNode {
+			value: Some(value),
+			left: None,
+			right: None,
+		}))
+	}
+
+	pub fn new_with_children(value: NodeValue, left: TreeNodeRef, right: TreeNodeRef) -> TreeNodeRef {
+		Rc::new(RefCell::new(TreeNode {
+			value: Some(value),
+			left: Some(left),
+			right: Some(right),
+		}))
+	}
+
 	pub fn set_val(&mut self, value: NodeValue) {
 		self.value = Some(value);
 	}
@@ -154,9 +170,7 @@ pub fn replace_variables(node: TreeNodeRef, values: &Vec<bool>, variables: &Vec<
 		Some(NodeValue::Variable(variable)) => {
 			let index: usize = variables.iter().position(|&v| v == variable).unwrap();
 			let value: bool = values[index];
-			let new_node: TreeNodeRef = TreeNode::new();
-			new_node.borrow_mut().set_val(NodeValue::Value(value));
-			return new_node;
+			return TreeNode::new_from(NodeValue::Value(value));
 		}
 		None => panic!("Node has no value"),
 	}
