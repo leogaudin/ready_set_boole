@@ -775,8 +775,6 @@ So, a powerset simply contains all the possible combinations of elements of the 
 
 ### Implementation
 
-> 💡 You can also [do this without recursivity](https://www.youtube.com/watch?v=8xQXq5JLhEY) if you are not very comfortable with it.
-
 To achieve this, we can use the special property of binary numbers.
 
 For a set of size $n$, the powerset will have $2^n$ elements.
