@@ -25,6 +25,9 @@ use ex05::negation_normal_form;
 mod ex06;
 use ex06::conjunctive_normal_form;
 
+mod ex07;
+use ex07::sat;
+
 fn main() {
 	println!("\n{}", "EX00 - ADDER".normal().bold());
 	for _ in 0..42 {
@@ -225,6 +228,31 @@ fn main() {
 			conjunctive_normal_form(formula).normal().bold()
 		);
 		println!();
+	}
+	println!("\n{}", "EX07 - SAT".normal().bold());
+	let formulas = [
+		("AB|", true),
+		("AB&", true),
+		("AA!&", false),
+		("AA^", false),
+		("AA!&BB!&|", false),
+	];
+
+	for formula in formulas {
+		println!(
+			"{}\t{} {}",
+			if sat(formula.0) == formula.1 {
+				"OK".green().bold()
+			} else {
+				"KO".red().bold()
+			},
+			formula.0,
+			if sat(formula.0) {
+				"can be satisfied"
+			} else {
+				"cannot be satisfied"
+			},
+		);
 	}
 }
 
