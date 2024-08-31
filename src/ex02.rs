@@ -9,8 +9,6 @@ pub fn gray_code(n: u32) -> u32 {
 		length += 1;
 	}
 
-	gray |= n >> length;
-
 	while length > 0 {
 		gray <<= 1;
 
