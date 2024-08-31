@@ -35,6 +35,8 @@ fn adder(a: u32, b: u32) -> u32;
 > - `=` (assignment)
 > - `==`, `!=`, `<`, `>`, `<=`, `>=` (comparison)
 
+---
+
 If we really simplify this exercise, it basically asks us to add two numbers in **base 10**, using only operations from **base 2**.
 
 ### Bases
@@ -290,6 +292,8 @@ fn multiplier(a: u32, b: u32) -> u32;
 > - `=` (assignment)
 > - `==`, `!=`, `<`, `>`, `<=`, `>=` (comparison)
 
+---
+
 ### Quick and dirty solution
 
 If you are not familiar with bitwise operations, you might be tempted to use a loop to add `a` to a result `b` times.
@@ -430,6 +434,8 @@ fn gray_code(n: u32) -> u32;
 
 > You must write a function that takes an integer `n` and returns its equivalent in Gray code.
 
+---
+
 This exercise is simpler than the others in the sense that **it does not require us to convert decimal problems to Boolean algebra**.
 
 The Gray Code is a variant of binary that was invented to facilitate transmissions, by making each consecutive value different from its previous one by only one bit.
@@ -477,6 +483,8 @@ fn eval_formula(formula: &str) -> bool;
 ```
 
 > You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, evaluates this formula, then returns the result.
+
+---
 
 This one is actually pretty simple.
 
@@ -548,6 +556,8 @@ fn print_truth_table(formula: &str);
 > You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, and writes its truth table on the standard output.
 >
 > A formula can have up to 26 distinct variables (A...Z), one per letter. Each variable can be used several times.
+
+---
 
 This exercise is a bit more complex than the previous one, but it does not really require any new concepts.
 
