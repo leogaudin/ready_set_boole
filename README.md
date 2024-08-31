@@ -587,3 +587,5 @@ fn generate_sets(variables: Vec<char>, set: Vec<bool>, index: usize) {
 - [📺 How To Convert Gray Code to Binary and Binary to Gray Code](https://www.youtube.com/watch?v=cbmh1DPPQyI)
 
 - [📖 Implementing a Binary Tree in Rust for fun](https://rusty-ferris.pages.dev/blog/binary-tree-sum-of-values/)
+
+- [💬 how to convert a propositional logical tree into conjunction normal form (CNF) tree](https://stackoverflow.com/a/16091759/18370307)
