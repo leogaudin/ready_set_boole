@@ -28,6 +28,9 @@ use ex06::conjunctive_normal_form;
 mod ex07;
 use ex07::sat;
 
+mod ex08;
+use ex08::powerset;
+
 fn main() {
 	println!("\n{}", "EX00 - ADDER".bold());
 	for _ in 0..42 {
@@ -66,7 +69,7 @@ fn main() {
 	}
 
 	println!("\n{}", "EX02 - GRAY CODE".bold());
-	let pairs = [
+	let pairs: Vec<(u32, u32)> = vec![
 		(0, 0),
 		(1, 1),
 		(2, 3),
@@ -94,7 +97,7 @@ fn main() {
 	}
 
 	println!("\n{}", "EX03 - BOOLEAN EVALUATION".bold());
-	let formulas = [
+	let formulas: Vec<(&str, bool)> = vec![
 		("10&", false),
 		("10|", true),
 		("11>", true),
@@ -120,7 +123,7 @@ fn main() {
 	}
 
 	println!("\n{}", "EX04 - TRUTH TABLE".bold());
-	let formulas = [
+	let formulas: Vec<&str> = vec![
 		"AB01&|", "AB&C|", "ABZK||=", "1WAH1|&",
 		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
 	];
@@ -130,7 +133,7 @@ fn main() {
 	}
 
 	println!("\n{}", "EX05 - NEGATION NORMAL FORM".bold());
-	let formulas = [
+	let formulas: Vec<&str> = vec![
 		// Subject
 		"AB&!",   // → A!B!|
 		"AB|!",   // → A!B!&
@@ -185,7 +188,7 @@ fn main() {
 	}
 
 	println!("\n{}", "EX06 - CONJUNCTIVE NORMAL FORM".bold());
-	let formulas = [
+	let formulas: Vec<&str> = vec![
 		// Subject
 		"AB&!",    // → A!B!|
 		"AB|!",    // → A!B!&
@@ -232,8 +235,8 @@ fn main() {
 	}
 
 	println!("\n{}", "EX07 - SAT".bold());
-	let large = conjunctive_normal_form("AA!^BB!^^");
-	let formulas = [
+	let large: String = conjunctive_normal_form("AA!^BB!^^");
+	let formulas: Vec<(&str, bool)> = vec![
 		("AB|", true),
 		("AB&", true),
 		("AA!&", false),
@@ -258,6 +261,26 @@ fn main() {
 				"cannot be satisfied"
 			},
 		);
+	}
+
+	println!("\n{}", "EX08 - POWERSET".bold());
+	let sets: Vec<Vec<i32>> = vec![
+		vec![1, 2, 3],
+		vec![1, 2, 3, 4],
+		vec![1, 2, 3, 4, 5],
+		vec![1, 2, 3, 4, 5, 6],
+		vec![1, 2, 3, 4, 5, 6, 7],
+		vec![1, 2, 3, 4, 5, 6, 7, 8],
+		vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
+		vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	];
+
+	for set in sets {
+		println!("Powerset of {:?}:", set);
+		for subset in powerset(set.clone()) {
+			println!("\t{:?}", subset);
+		}
+		println!();
 	}
 }
 

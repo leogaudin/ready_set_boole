@@ -1,5 +1,7 @@
 **`ready_set_boole` is a 42 project introducing the basics of boolean algebra**.
 
+> **⚠️ This guide assumes you are already an experienced programmer, and are familiar with classic data structures (i.e. stacks and binary trees).**
+
 ## Table of Contents
 
 - [Exercises](#exercises) 🏋🏻
@@ -8,6 +10,11 @@
 	- [02 - Gray Code](#02---gray-code) 🔢
 	- [03 - Boolean Evaluation](#03---boolean-evaluation) 🧮
 	- [04 - Truth Table](#04---truth-table) 📊
+  - [05 - Negation Normal Form](#05---negation-normal-form) ➖
+  - [06 - Conjunctive Normal Form](#06---conjunctive-normal-form) ⋀
+  - [07 - SAT](#07---sat) 🧩
+  - [08 - Powerset](#08---powerset) 🔋
+  - [09 - Set Evaluation](#09---set-evaluation) 🧾
 - [Resources](#resources) 📖
 
 # Exercises
@@ -526,6 +533,12 @@ match c {
 
 And that's it! You have your solution.
 
+> ⚠️ From exercise 05 onwards, we will start to work with more complex concepts, such as **Negation Normal Form** and **Conjunctive Normal Form**.
+>
+> For those purposes, it might be good implementing a **Binary Tree** to represent the formula.
+>
+> The logic is the same as with the stack, but there is a lot of initial code to write to set up the tree.
+
 ## 04 - Truth Table
 
 ```rust
@@ -576,16 +589,231 @@ fn generate_sets(variables: Vec<char>, set: Vec<bool>, index: usize) {
 }
 ```
 
+## 05 - Negation Normal Form
+
+```rust
+fn negation_normal_form(formula: &str) -> String;
+```
+
+> You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, and returns an equivalent formula in **Negation Normal Form** (NNF), **meaning that every negation operators must be located right after a variable**.
+>
+> The result must only contain variables and the following symbols: `!`, `&` and `|` (even if the input contains other operations).
+
+---
+
+> ⚠️ As said before, we will start to work with a **Binary Tree** to represent the formula.
+>
+> Every node of the tree will be an operator, and every leaf will be a variable.
+>
+> Example:
+>
+> ![Boolean Binary Tree](https://assets.leetcode.com/uploads/2022/05/16/example1drawio1.png)
+
+### Rewrite rules
+
+To complete this exercise, we will need to apply some "rewrite rules" to the tree, provided by the subject.
+
+1. **Elimination of double negation**
+
+$$
+\neg \neg A \rightarrow A
+$$
+
+2. **Material conditions**
+
+$$
+A \rightarrow B \rightarrow \neg A \vee B
+$$
+
+3. **Equivalence**
+
+$$
+A \leftrightarrow B \rightarrow (A \rightarrow B) \wedge (B \rightarrow A)
+$$
+
+4. **De Morgan's laws**
+
+$$
+\neg (A \wedge B) \rightarrow \neg A \vee \neg B
+$$
+
+$$
+\neg (A \vee B) \rightarrow \neg A \wedge \neg B
+$$
+
+<!-- 5. **Distributivity**
+
+$$
+A \wedge (B \vee C) \rightarrow (A \wedge B) \vee (A \wedge C)
+$$
+
+$$
+A \vee (B \wedge C) \rightarrow (A \vee B) \wedge (A \vee C)
+$$ -->
+
+### Steps
+
+1. **Parse the formula** to build the binary tree.
+2. **Apply all the mentioned rewrite rules** to the tree.
+> ⚠️ XOR is not mentioned in the rewrite rules, you have to figure out how to rewrite it!
+3. **Rebuild the formula** from the tree.
+
+To develop step 2 a bit more, here is how you can apply some rewrite rules:
+
+- **Material Conditions**: Every node `>` with children `A` and `B`, will need to become a node `|` with children `!A` and `B`.
+- **De Morgan's laws**: Every node `!` with a child `&` with children `A` and `B`, will need to become a node `|` with children `!A` and `!B`.
+
+> 💡 Use a recursive function to apply the rewrite rules to the tree.
+
+## 06 - Conjunctive Normal Form
+
+```rust
+fn conjunctive_normal_form(formula: &str) -> String;
+```
+
+> You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, and returns an equivalent formula in **Conjunctive Normal Form** (CNF). This means that in the output, every negation must be located right after a variable and **every conjunction must be located at the end of the formula**.
+
+---
+
+This sounds very similar to the previous exercise, but it is actually a bit more complex.
+
+Yes, you first need to convert the formula to NNF, but then you need to apply a few more rules to convert it to CNF.
+
+### The last rewrite rule
+
+The last rewrite rule is the **Distributivity**.
+
+$$
+A \wedge (B \vee C) \rightarrow (A \wedge B) \vee (A \wedge C)
+$$
+
+$$
+A \vee (B \wedge C) \rightarrow (A \vee B) \wedge (A \vee C)
+$$
+
+Distibutivity basically allows us to "distribute" a conjunction over a disjunction, and vice versa.
+
+> 🤓 More simply put, it means that if you have a `|` above a `&`, distributivity allows to "switch" them.
+>
+> That is good news, given that we want to bring all the `&` to the end of the formula (i.e. at the upper level of the tree).
+
+### Steps
+
+1. **Apply NNF** to the formula.
+2. **Build the binary tree**.
+3. **Apply the first distributivity rule** to the tree.
+4. **Rebuild the formula** from the tree.
+
+This being done, you might have an output that looks like this:
+
+```
+Formula: AB&CD&|
+CNF: AC|AD|&BC|BD|&&
+```
+
+If we were to convert this CNF back to a tree, it would look like `(A | C) & (A | D) & (B | C) & (B | D)`.
+
+So the objective is achieved, all the `&` are at the top-level!
+
+However, the RPN notation is not respected, some `&` are not at the very end of the formula.
+
+**The final step is simply to move all the `&` to the end of the formula** (yes, manipulating the RPN string directly).
+
+> ⚠️ This can be done safely only because all the `&` are at the top-level. If you were to manipulate an RPN notation without ensuring this, you would most likely break the formula.
+
+## 07 - SAT
+
+```rust
+fn sat(formula: &str) -> bool;
+```
+
+> You must write a function that takes as input a string that contains a propositional formula in reverse polish notation and tells whether it is satisfiable.
+>
+> The function has to determine if there is at least one combination of values for each variable of the given formula that makes the result be ⊤. If such a combination exists, the function returns `true`, otherwise, it returns `false`.
+
+---
+
+This exercise may sound complex, but you already have all the tools to solve it since exercise 04.
+
+Remember the truth table? It was used to evaluate all possible combinations of values for the variables.
+
+Well, this is the only thing you need to do here.
+
+1. **Generate all possible sets of values** for the variables.
+2. **Evaluate the formula** for each set of values.
+3. If the formula evaluates to `true` for at least one set of values, return `true`.
+4. Return `false` otherwise.
+
+## 08 - Powerset
+
+```rust
+fn powerset(set: Vec<i32>) -> Vec<Vec<i32>>;
+```
+
+> You must write a function that takes as input a set of integers, and returns its powerset.
+
+---
+
+The powerset of a set is the set of all its subsets.
+
+> That doesn't make it any clearer.
+
+Let's take the set `[1, 2, 3]`.
+
+The powerset of this set is:
+
+```
+[
+  [], // The empty set
+  [1], [2], [3], // All the singletons
+  [1, 2], [1, 3], [2, 3], // All the pairs
+  [1, 2, 3] // The set itself
+]
+```
+
+So, a powerset simply contains all the possible combinations of elements of the set.
+
+### Implementation
+
+> 💡 You can also [do this without recursivity](https://www.youtube.com/watch?v=8xQXq5JLhEY) if you are not very comfortable with it.
+
+To achieve this, we can use the special property of binary numbers.
+
+For a set of size $n$, the powerset will have $2^n$ elements.
+
+Moreover, going from $0$ to $2^n - 1$ in binary will give us all the possible combinations of `0` and `1` for a set of size $n$.
+
+> Example: for the set `[1, 2, 3]` of length $3$, we will go from $0$ to $2^3 - 1 = 7$ in binary, and push the values of the set where the bit is `1`.
+>
+> ```
+> // 123
+>
+> 0: 000 → []
+> 1: 001 → [3]
+> 2: 010 → [2]
+> 3: 011 → [2, 3]
+> 4: 100 → [1]
+> 5: 101 → [1, 3]
+> 6: 110 → [1, 2]
+> 7: 111 → [1, 2, 3]
+> ```
+>
+
+And that's it! We have our powerset.
+
 # Resources
 
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)
 - [📺 Binary Multiplication](https://www.youtube.com/watch?v=PjmWG_8b3os)
-
+---
 - [💬 How can I perform multiplication, using bitwise operators?](https://stackoverflow.com/a/3722053/18370307)
 - [💬 Grade School Multiplication Algorithm for Binary Numbers explanation](https://math.stackexchange.com/a/1118159)
-
+---
 - [📺 How To Convert Gray Code to Binary and Binary to Gray Code](https://www.youtube.com/watch?v=cbmh1DPPQyI)
-
+---
 - [📖 Implementing a Binary Tree in Rust for fun](https://rusty-ferris.pages.dev/blog/binary-tree-sum-of-values/)
-
+---
 - [💬 how to convert a propositional logical tree into conjunction normal form (CNF) tree](https://stackoverflow.com/a/16091759/18370307)
+---
+- [📺 Power Set](https://www.youtube.com/watch?v=FOQn8afAvLE)
+- [📺 Generate Power set for a given set](https://www.youtube.com/watch?v=8xQXq5JLhEY) (bitwise way)
