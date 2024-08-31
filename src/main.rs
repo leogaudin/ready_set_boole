@@ -236,6 +236,7 @@ fn main() {
 		("AA!&", false),
 		("AA^", false),
 		("AA!&BB!&|", false),
+		("AA!^BB!^^", false),
 	];
 
 	for formula in formulas {
