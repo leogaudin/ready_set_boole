@@ -29,7 +29,7 @@ mod ex07;
 use ex07::sat;
 
 fn main() {
-	println!("\n{}", "EX00 - ADDER".normal().bold());
+	println!("\n{}", "EX00 - ADDER".bold());
 	for _ in 0..42 {
 		let mut rng = rand::thread_rng();
 		let a: u32 = rng.next_u32() / 2;
@@ -47,7 +47,7 @@ fn main() {
 		);
 	}
 
-	println!("\n{}", "EX01 - MULTIPLIER".normal().bold());
+	println!("\n{}", "EX01 - MULTIPLIER".bold());
 	for _ in 0..42 {
 		let mut generator: rand::prelude::ThreadRng = rand::thread_rng();
 		let a: u32 = generator.next_u32() / std::u16::MAX as u32;
@@ -65,7 +65,7 @@ fn main() {
 		);
 	}
 
-	println!("\n{}", "EX02 - GRAY CODE".normal().bold());
+	println!("\n{}", "EX02 - GRAY CODE".bold());
 	let pairs = [
 		(0, 0),
 		(1, 1),
@@ -93,7 +93,7 @@ fn main() {
 		);
 	}
 
-	println!("\n{}", "EX03 - BOOLEAN EVALUATION".normal().bold());
+	println!("\n{}", "EX03 - BOOLEAN EVALUATION".bold());
 	let formulas = [
 		("10&", false),
 		("10|", true),
@@ -119,7 +119,7 @@ fn main() {
 		);
 	}
 
-	println!("\n{}", "EX04 - TRUTH TABLE".normal().bold());
+	println!("\n{}", "EX04 - TRUTH TABLE".bold());
 	let formulas = [
 		"AB01&|", "AB&C|", "ABZK||=", "1WAH1|&",
 		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
@@ -129,7 +129,7 @@ fn main() {
 		print_truth_table(formula);
 	}
 
-	println!("\n{}", "EX05 - NEGATION NORMAL FORM".normal().bold());
+	println!("\n{}", "EX05 - NEGATION NORMAL FORM".bold());
 	let formulas = [
 		// Subject
 		"AB&!",   // → A!B!|
@@ -176,15 +176,15 @@ fn main() {
 			},
 		);
 
-		println!("Formula: {}", formula.normal().bold());
-		println!("RPN output: {}", nnf.as_str().normal().bold());
+		println!("Formula: {}", formula.bold());
+		println!("RPN output: {}", nnf.as_str().bold());
 		// print!("Tree: ");
 		// print_tree(nnf);
 		// println!();
 		println!();
 	}
 
-	println!("\n{}", "EX06 - CONJUNCTIVE NORMAL FORM".normal().bold());
+	println!("\n{}", "EX06 - CONJUNCTIVE NORMAL FORM".bold());
 	let formulas = [
 		// Subject
 		"AB&!",    // → A!B!|
@@ -222,14 +222,14 @@ fn main() {
 			},
 		);
 
-		println!("Formula: {}", formula.normal().bold());
+		println!("Formula: {}", formula.bold());
 		println!(
 			"RPN output: {}",
-			conjunctive_normal_form(formula).normal().bold()
+			conjunctive_normal_form(formula).bold()
 		);
 		println!();
 	}
-	println!("\n{}", "EX07 - SAT".normal().bold());
+	println!("\n{}", "EX07 - SAT".bold());
 	let formulas = [
 		("AB|", true),
 		("AB&", true),
@@ -247,7 +247,7 @@ fn main() {
 			} else {
 				"KO".red().bold()
 			},
-			formula.0,
+			formula.0.bold(),
 			if sat(formula.0) {
 				"can be satisfied"
 			} else {
