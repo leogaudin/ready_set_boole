@@ -40,8 +40,9 @@ fn generate_sets(variables: Vec<char>, set: &mut Vec<bool>, index: usize, formul
 		return line;
 	}
 
+	let mut line = String::new();
 	set[index] = false;
-	let mut line: String = generate_sets(variables.clone(), set, index + 1, formula);
+	line.push_str(&generate_sets(variables.clone(), set, index + 1, formula));
 	set[index] = true;
 	line.push_str(&generate_sets(variables.clone(), set, index + 1, formula));
 	return line;
