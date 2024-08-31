@@ -200,6 +200,7 @@ fn main() {
 		"AB&CD&|EF&|",
 		"AB&CD&|EF&|GH&|",
 		"AB&CD&|EF&|GH&|IJ&|",
+		"AA!^BB!^^",
 	];
 
 	for formula in formulas {
@@ -229,7 +230,9 @@ fn main() {
 		);
 		println!();
 	}
+
 	println!("\n{}", "EX07 - SAT".bold());
+	let large = conjunctive_normal_form("AA!^BB!^^");
 	let formulas = [
 		("AB|", true),
 		("AB&", true),
@@ -237,6 +240,7 @@ fn main() {
 		("AA^", false),
 		("AA!&BB!&|", false),
 		("AA!^BB!^^", false),
+		(large.as_str(), false),
 	];
 
 	for formula in formulas {

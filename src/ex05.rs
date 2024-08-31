@@ -6,7 +6,7 @@
 
 use crate::tree::{create_tree, tree_to_rpn, NodeValue, TreeNode, TreeNodeRef};
 
-pub fn remove_double_negation(node: TreeNodeRef) -> TreeNodeRef {
+fn remove_double_negation(node: TreeNodeRef) -> TreeNodeRef {
     let node = node.borrow();
     match node.get_val() {
         Some(NodeValue::Operator('!')) => {
@@ -31,7 +31,7 @@ pub fn remove_double_negation(node: TreeNodeRef) -> TreeNodeRef {
 	}
 }
 
-pub fn remove_equivalence(node: TreeNodeRef) -> TreeNodeRef {
+fn remove_equivalence(node: TreeNodeRef) -> TreeNodeRef {
 	let node = node.borrow();
 	match node.get_val() {
 		Some(NodeValue::Operator('=')) => {
@@ -70,7 +70,7 @@ pub fn remove_equivalence(node: TreeNodeRef) -> TreeNodeRef {
 	}
 }
 
-pub fn remove_de_morgan(node: TreeNodeRef) -> TreeNodeRef {
+fn remove_de_morgan(node: TreeNodeRef) -> TreeNodeRef {
 	let node = node.borrow();
 	match node.get_val() {
 		Some(NodeValue::Operator('!')) => {
@@ -121,7 +121,7 @@ pub fn remove_de_morgan(node: TreeNodeRef) -> TreeNodeRef {
 	}
 }
 
-pub fn remove_material_condition(node: TreeNodeRef) -> TreeNodeRef {
+fn remove_material_condition(node: TreeNodeRef) -> TreeNodeRef {
 	let node = node.borrow();
 	match node.get_val() {
 		Some(NodeValue::Operator('>')) => {
@@ -150,7 +150,39 @@ pub fn remove_material_condition(node: TreeNodeRef) -> TreeNodeRef {
 	}
 }
 
+fn remove_xor(node: TreeNodeRef) -> TreeNodeRef {
+	let node = node.borrow();
+	match node.get_val() {
+		Some(NodeValue::Operator('^')) => {
+			let left: TreeNodeRef = remove_xor(node.get_left().unwrap());
+			let right: TreeNodeRef = remove_xor(node.get_right().unwrap());
+			let equal: TreeNodeRef = TreeNode::new_with_children(
+				NodeValue::Operator('='),
+				left,
+				right
+			);
+			let new_node: TreeNodeRef = TreeNode::new_from(
+				NodeValue::Operator('!')
+			);
+			new_node.borrow_mut().set_left(equal);
+			return new_node;
+		}
+		Some(NodeValue::Value(_)) | Some(NodeValue::Variable(_)) => return node.clone(),
+		_ => {
+			let new_node: TreeNodeRef = TreeNode::new_from(node.get_val().unwrap());
+			if let Some(left) = node.get_left() {
+				new_node.borrow_mut().set_left(remove_xor(left));
+			}
+			if let Some(right) = node.get_right() {
+				new_node.borrow_mut().set_right(remove_xor(right));
+			}
+			return new_node;
+		}
+	}
+}
+
 pub fn tree_to_nnf(tree: TreeNodeRef) -> TreeNodeRef {
+	let tree: TreeNodeRef = remove_xor(tree);
 	let tree: TreeNodeRef = remove_equivalence(tree);
 	let tree: TreeNodeRef = remove_material_condition(tree);
 	let tree: TreeNodeRef = remove_de_morgan(tree);
