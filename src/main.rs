@@ -37,8 +37,8 @@ use ex09::eval_set;
 mod ex10;
 use ex10::map;
 
-// mod ex11;
-// use ex11::reverse_map;
+mod ex11;
+use ex11::reverse_map;
 
 fn main() {
 	println!("\n{}", "EX00 - ADDER".bold());
@@ -236,10 +236,7 @@ fn main() {
 		);
 
 		println!("Formula: {}", formula.bold());
-		println!(
-			"RPN output: {}",
-			conjunctive_normal_form(formula).bold()
-		);
+		println!("RPN output: {}", conjunctive_normal_form(formula).bold());
 		println!();
 	}
 
@@ -295,30 +292,12 @@ fn main() {
 
 	println!("\n{}", "EX09 - EVAL SET".bold());
 	let sets: Vec<Vec<Vec<i32>>> = vec![
-		vec![
-			vec![0, 1, 2],
-			vec![0, 3, 4]
-		],
-		vec![
-			vec![0, 1, 2],
-			vec![3, 4, 5]
-		],
-		vec![
-			vec![0, 1, 2]
-		],
-		vec![
-			vec![0, 1, 2],
-			vec![3, 4, 5],
-			vec![6, 7, 3]
-		],
-		vec![
-			vec![42, 43],
-			vec![44, 45, 46],
-		],
-		vec![
-			vec![42, 43],
-			vec![44, 45, 46],
-		],
+		vec![vec![0, 1, 2], vec![0, 3, 4]],
+		vec![vec![0, 1, 2], vec![3, 4, 5]],
+		vec![vec![0, 1, 2]],
+		vec![vec![0, 1, 2], vec![3, 4, 5], vec![6, 7, 3]],
+		vec![vec![42, 43], vec![44, 45, 46]],
+		vec![vec![42, 43], vec![44, 45, 46]],
 	];
 	let formulas: Vec<(&str, Vec<i32>)> = vec![
 		("AB&", vec![0]),
@@ -351,16 +330,30 @@ fn main() {
 		((u16::MAX, u16::MAX), 1.0),
 	];
 
-	for coord in coordinates {
+	for coord in &coordinates {
 		println!(
 			"{}\t{:?} → {}",
-			if map(coord.0.0, coord.0.1) == coord.1 {
+			if map(coord.0 .0, coord.0 .1) == coord.1 {
 				"OK".green().bold()
 			} else {
 				"KO".red().bold()
 			},
 			coord.0,
-			map(coord.0.0, coord.0.1)
+			map(coord.0 .0, coord.0 .1)
+		);
+	}
+
+	println!("\n{}", "EX11 - INVERSE FUNCTION".bold());
+	for coord in &coordinates {
+		println!(
+			"{}\t{} → {:?}",
+			if reverse_map(coord.1) == (coord.0 .0, coord.0 .1) {
+				"OK".green().bold()
+			} else {
+				"KO".red().bold()
+			},
+			coord.1,
+			reverse_map(coord.1)
 		);
 	}
 }

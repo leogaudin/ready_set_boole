@@ -912,6 +912,49 @@ We know that the two inputs will not exceed $2^{16}$ each, so we can concatenate
 
 > 💡 We can use the `u32` type to store this number.
 
+### Steps
+
+1. **Shift `x` to the left by $16$ bits**.
+2. **Perform a bitwise OR** between `x` and `y`.
+3. **Divide the result by $2^{32} - 1$** to get a number between $0$ and $1$.
+
+And that's it! You have your solution.
+
+## 11 - Curve Inverse
+
+```rust
+fn reverse_map(n: f64) -> (u16, u16);
+```
+
+> You must write the inverse function $f^{−1}$ of the function $f$ from the previous exercise (so this time, this is a space-filling curve, used to decode data from a line into a space).
+>
+> Let $f$ and $A$ be the function and set from the previous exercise, then:
+>
+> $$f^{-1} : A \rightarrow [[0; 2^{16} - 1]]^2 \subset \mathbb{N}^2$$
+>
+> The above function must be implemented such that the following expressions are true for values that are in range:
+>
+> $$(f^{-1} \circ f)(x, y) = (x, y)$$
+> $$(f \circ f^{-1})(x) = x$$
+
+---
+
+Let's decrypt the mathematical notation.
+
+- The function $f^{-1}$ takes a floating-point number $n$ in the set $A$, and returns a pair of integers $(x, y)$ comprised between $0$ and $2^{16} - 1$.
+
+- If you apply $f$ to a pair of integers $(x, y)$, and then apply $f^{-1}$ to the result, you should get back $(x, y)$.
+
+- If you apply $f^{-1}$ to a floating-point number $n$, and then apply $f$ to the result, you should get back $n$.
+
+So basically, you need to reverse the operation you did in the previous exercise.
+
+### Steps
+
+1. **Multiply `n` by $2^{32} - 1$** to get a number between $0$ and $2^{32} - 1$.
+2. **Shift `n` to the right by $16$ bits** to get the original `x`.
+3. **Shift `n` to the left by $16$ bits, then again to the right by $16$ bits** to get the original `y`.
+
 # Resources
 
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)
