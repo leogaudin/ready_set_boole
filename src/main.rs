@@ -1,3 +1,17 @@
+mod tree;
+mod ex00;
+mod ex01;
+mod ex02;
+mod ex03;
+mod ex04;
+mod ex05;
+mod ex06;
+mod ex07;
+mod ex08;
+mod ex09;
+mod ex10;
+mod ex11;
+
 use colored::Colorize;
 use rand::RngCore;
 // use tree::{print_tree, tree_to_rpn, TreeNodeRef};
@@ -14,51 +28,37 @@ use ex09::eval_set;
 use ex10::map;
 use ex11::reverse_map;
 
-mod ex00;
-mod ex01;
-mod ex02;
-mod ex03;
-mod ex04;
-mod ex05;
-mod ex06;
-mod ex07;
-mod ex08;
-mod ex09;
-mod ex10;
-mod ex11;
-mod tree;
-
 fn main() {
-	chrono("test_ex00_adder", test_ex00_adder);
-	chrono("test_ex01_multiplier", test_ex01_multiplier);
-	chrono("test_ex02_gray_code", test_ex02_gray_code);
-	chrono("test_ex03_eval_formula", test_ex03_eval_formula);
-	chrono("test_ex04_truth_table", test_ex04_truth_table);
-	chrono("test_ex05_negation_normal_form", test_ex05_negation_normal_form);
-	chrono("test_ex06_conjunctive_normal_form", test_ex06_conjunctive_normal_form);
-	chrono("test_ex07_sat", test_ex07_sat);
-	chrono("test_ex08_powerset", test_ex08_powerset);
-	chrono("test_ex09_eval_set", test_ex09_eval_set);
-	chrono("test_ex10_map", test_ex10_map);
-	chrono("test_ex11_reverse_map", test_ex11_reverse_map);
+	chrono(test_ex00_adder);
+	chrono(test_ex01_multiplier);
+	chrono(test_ex02_gray_code);
+	chrono(test_ex03_eval_formula);
+	chrono(test_ex04_truth_table);
+	chrono(test_ex05_negation_normal_form);
+	chrono(test_ex06_conjunctive_normal_form);
+	chrono(test_ex07_sat);
+	chrono(test_ex08_powerset);
+	chrono(test_ex09_eval_set);
+	chrono(test_ex10_map);
+	chrono(test_ex11_reverse_map);
 }
 
-fn chrono<F>(name: &str, f: F)
+fn chrono<F>(f: F)
 where
 	F: Fn(),
 {
-	let start = std::time::Instant::now();
+	let start: std::time::Instant = std::time::Instant::now();
 	f();
 	let duration = start.elapsed();
-	println!("\x1b[1m{} executed in {:?}\x1b[0m", name, duration);
+	println!("\x1b[1mTest executed in {:?}\x1b[0m", duration);
 }
 
 fn test_ex00_adder() {
 	println!("\n{}", "EX00 - ADDER".bold());
 	for _ in 0..42 {
-		let mut rng = rand::thread_rng();
-		let a: u32 = rng.next_u32() / 2;
-		let b: u32 = rng.next_u32() / 2;
+		let mut generator = rand::thread_rng();
+		let a: u32 = generator.next_u32() / 2;
+		let b: u32 = generator.next_u32() / 2;
 		println!(
 			"{}\t{} + {} = {}",
 			if adder(a, b) == a + b {
@@ -76,7 +76,7 @@ fn test_ex00_adder() {
 fn test_ex01_multiplier() {
 	println!("\n{}", "EX01 - MULTIPLIER".bold());
 	for _ in 0..42 {
-		let mut generator: rand::prelude::ThreadRng = rand::thread_rng();
+		let mut generator = rand::thread_rng();
 		let a: u32 = generator.next_u32() / std::u16::MAX as u32;
 		let b: u32 = generator.next_u32() / std::u16::MAX as u32;
 		println!(
@@ -154,7 +154,7 @@ fn test_ex03_eval_formula() {
 fn test_ex04_truth_table() {
 	println!("\n{}", "EX04 - TRUTH TABLE".bold());
 	let formulas: Vec<&str> = vec![
-		"AB01&|", "AB&C|", "ABZK||=", "1WAH1|&",
+		"AB1&|", "AB&C|", "ABZK||=", "1WAH1|&&&",
 		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
 	];
 
@@ -237,7 +237,7 @@ fn test_ex06_conjunctive_normal_form() {
 		"AB&CD&|",
 		"AB&CD&|EF&|",
 		"AB&CD&|EF&|GH&|",
-		"AB&CD&|EF&|GH&|IJ&|",
+		"AB&CD&|EF&|GH&|IJ&|!",
 		"AA!^BB!^^",
 	];
 
