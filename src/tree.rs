@@ -1,4 +1,4 @@
-use std::{cell::RefCell, rc::Rc};
+use std::{cell::RefCell, cmp::Ordering, rc::Rc};
 
 #[derive(Debug, Clone)]
 pub enum NodeValue {
@@ -124,7 +124,12 @@ pub fn create_tree(expression: &str) -> TreeNodeRef {
 		}
 		stack.push(node);
 	}
-	stack.pop().unwrap()
+
+	match stack.len().cmp(&1usize) {
+		Ordering::Greater => panic!("Too many operands, not enough operators."),
+		Ordering::Equal => return stack.pop().unwrap(),
+		Ordering::Less => panic!("Empty formula"),
+	}
 }
 
 pub fn eval_tree(node: TreeNodeRef) -> bool {

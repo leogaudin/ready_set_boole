@@ -68,9 +68,14 @@ fn eval_tree(node: TreeNodeRef, sets: Vec<Vec<i32>>) -> Vec<i32> {
 
 pub fn eval_set(formula: &str, sets: Vec<Vec<i32>>) -> Vec<i32> {
 	let tree: TreeNodeRef = create_tree(conjunctive_normal_form(formula).as_str());
+
 	let mut variables: Vec<char> = get_variables(formula);
+	if variables.len() > sets.len() {
+		panic!("Not enough sets");
+	}
 	variables.sort();
-	let mut result = eval_tree(tree, sets);
+
+	let mut result: Vec<i32> = eval_tree(tree, sets);
 	result.sort();
 
 	return result;
