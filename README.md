@@ -830,7 +830,7 @@ The following logical operations have a counterpart in set theory (they are not 
 <div align='center'>
 
 Boolean Algebra | Boolean Algebra name | Set Theory | Set Theory name
---- | --- | --- | --- | ---
+--- | --- | --- | ---
 $\neg A$ | Negation (NOT) | $A^c$ | Complement
 $A \vee B$ | Disjunction (OR) | $A \cup B$ | Union
 $A \wedge B$ | Conjunction (AND) | $A \cap B$ | Intersection
