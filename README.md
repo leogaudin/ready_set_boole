@@ -913,7 +913,7 @@ We know that the two inputs will not exceed $2^{16}$ each, so we can concatenate
 
 > 💡 We can use the `u32` type to store this number.
 
-### Steps
+### Steps
 
 1. **Shift `x` to the left by $16$ bits**.
 2. **Perform a bitwise OR** between `x` and `y`.
