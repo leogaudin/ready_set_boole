@@ -888,13 +888,14 @@ fn map(x: u16, y: u16) -> f64;
 
 > You must write a function that takes as input two integers `x` and `y`, and returns a floating-point number that represents the value of the curve at the point `(x, y)`.
 >
-> You must write a function (the inverse of a space-filling curve, used to encode spatial data into a line) that takes a pair of coordinates in two dimensions and assigns a unique value in the closed interval [0; 1] ∈ R.
+> You must write a function (the inverse of a space-filling curve, used to encode spatial data into a line) that takes a pair of coordinates in two dimensions and assigns a unique value in the closed interval $[0, 1] \in \mathbb{R}$.
 >
 > Let f be a function and let A be a set such as:
 >
 > $$
 > f : (x, y) \in [[0; 2^{16} - 1]]^2 \subset \mathbb{N}^2 \rightarrow [0; 1] \subset \mathbb{R}
 > $$
+>
 > $$
 > A \subset [0; 1] \subset \mathbb{R}
 > $$
@@ -935,6 +936,7 @@ fn reverse_map(n: f64) -> (u16, u16);
 > The above function must be implemented such that the following expressions are true for values that are in range:
 >
 > $$(f^{-1} \circ f)(x, y) = (x, y)$$
+>
 > $$(f \circ f^{-1})(x) = x$$
 
 ---
