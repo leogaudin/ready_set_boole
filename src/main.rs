@@ -1,46 +1,59 @@
 use colored::Colorize;
 use rand::RngCore;
-
-mod ex00;
-use ex00::adder;
-
-mod ex01;
-use ex01::multiplier;
-
-mod ex02;
-use ex02::gray_code;
-
-mod ex03;
-use ex03::eval_formula;
-
-mod ex04;
-use ex04::{generate_truth_table, print_truth_table};
-
-mod tree;
 // use tree::{print_tree, tree_to_rpn, TreeNodeRef};
-
-mod ex05;
+use ex00::adder;
+use ex01::multiplier;
+use ex02::gray_code;
+use ex03::eval_formula;
+use ex04::{generate_truth_table, print_truth_table};
 use ex05::negation_normal_form;
-
-mod ex06;
 use ex06::conjunctive_normal_form;
-
-mod ex07;
 use ex07::sat;
-
-mod ex08;
 use ex08::powerset;
-
-mod ex09;
 use ex09::eval_set;
-
-mod ex10;
 use ex10::map;
-
-mod ex11;
 use ex11::reverse_map;
 
+mod ex00;
+mod ex01;
+mod ex02;
+mod ex03;
+mod ex04;
+mod ex05;
+mod ex06;
+mod ex07;
+mod ex08;
+mod ex09;
+mod ex10;
+mod ex11;
+mod tree;
+
 fn main() {
+	chrono("test_ex00_adder", test_ex00_adder);
+	chrono("test_ex01_multiplier", test_ex01_multiplier);
+	chrono("test_ex02_gray_code", test_ex02_gray_code);
+	chrono("test_ex03_eval_formula", test_ex03_eval_formula);
+	chrono("test_ex04_truth_table", test_ex04_truth_table);
+	chrono("test_ex05_negation_normal_form", test_ex05_negation_normal_form);
+	chrono("test_ex06_conjunctive_normal_form", test_ex06_conjunctive_normal_form);
+	chrono("test_ex07_sat", test_ex07_sat);
+	chrono("test_ex08_powerset", test_ex08_powerset);
+	chrono("test_ex09_eval_set", test_ex09_eval_set);
+	chrono("test_ex10_map", test_ex10_map);
+	chrono("test_ex11_reverse_map", test_ex11_reverse_map);
+}
+
+fn chrono<F>(name: &str, f: F)
+where
+	F: Fn(),
+{
+	let start = std::time::Instant::now();
+	f();
+	let duration = start.elapsed();
+	println!("\x1b[1m{} executed in {:?}\x1b[0m", name, duration);
+}
+
+fn test_ex00_adder() {
 	println!("\n{}", "EX00 - ADDER".bold());
 	for _ in 0..42 {
 		let mut rng = rand::thread_rng();
@@ -58,7 +71,9 @@ fn main() {
 			adder(a, b),
 		);
 	}
+}
 
+fn test_ex01_multiplier() {
 	println!("\n{}", "EX01 - MULTIPLIER".bold());
 	for _ in 0..42 {
 		let mut generator: rand::prelude::ThreadRng = rand::thread_rng();
@@ -76,7 +91,9 @@ fn main() {
 			multiplier(a, b),
 		);
 	}
+}
 
+fn test_ex02_gray_code() {
 	println!("\n{}", "EX02 - GRAY CODE".bold());
 	let pairs: Vec<(u32, u32)> = vec![
 		(0, 0),
@@ -104,7 +121,9 @@ fn main() {
 			gray_code(pair.0),
 		);
 	}
+}
 
+fn test_ex03_eval_formula() {
 	println!("\n{}", "EX03 - BOOLEAN EVALUATION".bold());
 	let formulas: Vec<(&str, bool)> = vec![
 		("10&", false),
@@ -130,7 +149,9 @@ fn main() {
 			eval_formula(formula.0)
 		);
 	}
+}
 
+fn test_ex04_truth_table() {
 	println!("\n{}", "EX04 - TRUTH TABLE".bold());
 	let formulas: Vec<&str> = vec![
 		"AB01&|", "AB&C|", "ABZK||=", "1WAH1|&",
@@ -138,9 +159,12 @@ fn main() {
 	];
 
 	for formula in formulas {
+		println!("{}", formula.bold());
 		print_truth_table(formula);
 	}
+}
 
+fn test_ex05_negation_normal_form() {
 	println!("\n{}", "EX05 - NEGATION NORMAL FORM".bold());
 	let formulas: Vec<&str> = vec![
 		// Subject
@@ -195,7 +219,9 @@ fn main() {
 		// println!();
 		println!();
 	}
+}
 
+fn test_ex06_conjunctive_normal_form() {
 	println!("\n{}", "EX06 - CONJUNCTIVE NORMAL FORM".bold());
 	let formulas: Vec<&str> = vec![
 		// Subject
@@ -239,7 +265,9 @@ fn main() {
 		println!("RPN output: {}", conjunctive_normal_form(formula).bold());
 		println!();
 	}
+}
 
+fn test_ex07_sat() {
 	println!("\n{}", "EX07 - SAT".bold());
 	let large: String = conjunctive_normal_form("AA!^BB!^^");
 	let formulas: Vec<(&str, bool)> = vec![
@@ -268,7 +296,9 @@ fn main() {
 			},
 		);
 	}
+}
 
+fn test_ex08_powerset() {
 	println!("\n{}", "EX08 - POWERSET".bold());
 	let sets: Vec<Vec<i32>> = vec![
 		vec![1, 2, 3],
@@ -289,7 +319,9 @@ fn main() {
 		}
 		println!();
 	}
+}
 
+fn test_ex09_eval_set() {
 	println!("\n{}", "EX09 - EVAL SET".bold());
 	let sets: Vec<Vec<Vec<i32>>> = vec![
 		vec![vec![0, 1, 2], vec![0, 3, 4]],
@@ -321,7 +353,9 @@ fn main() {
 			eval_set(formula.0, sets[i].clone()),
 		);
 	}
+}
 
+fn test_ex10_map() {
 	println!("\n{}", "EX10 - CURVE".bold());
 	let coordinates: Vec<((u16, u16), f64)> = vec![
 		((0, 0), 0.0),
@@ -342,8 +376,17 @@ fn main() {
 			map(coord.0 .0, coord.0 .1)
 		);
 	}
+}
 
+fn test_ex11_reverse_map() {
 	println!("\n{}", "EX11 - INVERSE FUNCTION".bold());
+	let coordinates: Vec<((u16, u16), f64)> = vec![
+		((0, 0), 0.0),
+		((124, 5345), 0.0018933343239811561),
+		((42141, 5543), 0.6430219206127855),
+		((u16::MAX, u16::MAX), 1.0),
+	];
+
 	for coord in &coordinates {
 		println!(
 			"{}\t{} → {:?}",
