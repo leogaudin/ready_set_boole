@@ -27,25 +27,25 @@ pub fn get_variables(formula: &str) -> Vec<char> {
 	return variables;
 }
 
-fn generate_sets(variables: Vec<char>, set: &mut Vec<bool>, index: usize, formula: &str) -> String {
-	if index == variables.len() {
+fn generate_sets(variables: Vec<char>, formula: &str) -> String {
+	let mut result: String = String::new();
+	let var_len: usize = variables.len();
+	let mut set: Vec<bool> = vec![false; var_len];
+
+	for binary_combination in 0..2usize.pow(var_len as u32) {
 		let mut line: String = String::new();
-		for value in set.iter() {
-			line.push_str(&format!("{}\t", *value as u8));
+		for position in 0..var_len {
+			set[position] = binary_combination & (1 << position) != 0;
+			line.push_str(&format!("{}\t", set[position] as u8));
 		}
-		let tree: TreeNodeRef = replace_variables(create_tree(formula), set, &variables);
+		let tree: TreeNodeRef = replace_variables(create_tree(formula), &set, &variables);
 		let eval: bool = eval_tree(tree.clone());
 		line.push_str(&eval.to_string());
 		line.push_str("\n");
-		return line;
+		result.push_str(&line);
 	}
 
-	let mut line = String::new();
-	set[index] = false;
-	line.push_str(&generate_sets(variables.clone(), set, index + 1, formula));
-	set[index] = true;
-	line.push_str(&generate_sets(variables.clone(), set, index + 1, formula));
-	return line;
+	return result;
 }
 
 pub fn generate_truth_table(formula: &str) -> String {
@@ -60,8 +60,7 @@ pub fn generate_truth_table(formula: &str) -> String {
 	}
 	table.push_str("=\n");
 
-	let mut set: Vec<bool> = vec![false; variables.len()];
-	table.push_str(&generate_sets(variables, &mut set, 0, formula));
+	table.push_str(&generate_sets(variables, formula));
 	return table;
 }
 
