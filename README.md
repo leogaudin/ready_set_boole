@@ -827,15 +827,17 @@ Once again, the subject is not very clear, but it is actually quite simple.
 
 The following logical operations have a counterpart in set theory (they are not the only operations that exist though):
 
-<center>
+<div align='center'>
 
-Boolean Algebra | Boolean Algebra name | Set Theory | Set Theory name | Coding notation
+Boolean Algebra | Boolean Algebra name | Set Theory | Set Theory name
 --- | --- | --- | --- | ---
-$\neg A$ | Negation (NOT) | $A^c$ | Complement | `!`
-$A \vee B$ | Disjunction (OR) | $A \cup B$ | Union | `|`
-$A \wedge B$ | Conjunction (AND) | $A \cap B$ | Intersection | `&`
+$\neg A$ | Negation (NOT) | $A^c$ | Complement
+$A \vee B$ | Disjunction (OR) | $A \cup B$ | Union
+$A \wedge B$ | Conjunction (AND) | $A \cap B$ | Intersection
 
-</center>
+</div>
+
+> In programming, the symbols for these operations are respectively `!`, `|`, and `&`.
 
 #### Negation
 
