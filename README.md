@@ -809,7 +809,7 @@ Moreover, going from $0$ to $2^n - 1$ in binary will give us all the possible co
 
 And that's it! We have our powerset.
 
-## 09 - Set Evaluation
+## 09 - Set Evaluation
 
 ```rust
 fn eval_set(formula: &str, sets: Vec<Vec<i32>>) -> Vec<i32>;
