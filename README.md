@@ -920,7 +920,7 @@ We know that the two inputs will not exceed $2^{16}$ each, so we can concatenate
 
 And that's it! You have your solution.
 
-## 11 - Curve Inverse
+## 11 - Inverse function
 
 ```rust
 fn reverse_map(n: f64) -> (u16, u16);
