@@ -34,6 +34,12 @@ use ex08::powerset;
 mod ex09;
 use ex09::eval_set;
 
+mod ex10;
+use ex10::map;
+
+// mod ex11;
+// use ex11::reverse_map;
+
 fn main() {
 	println!("\n{}", "EX00 - ADDER".bold());
 	for _ in 0..42 {
@@ -334,6 +340,27 @@ fn main() {
 			formula.0.bold(),
 			sets[i],
 			eval_set(formula.0, sets[i].clone()),
+		);
+	}
+
+	println!("\n{}", "EX10 - CURVE".bold());
+	let coordinates: Vec<((u16, u16), f64)> = vec![
+		((0, 0), 0.0),
+		((124, 5345), 0.0018933343239811561),
+		((42141, 5543), 0.6430219206127855),
+		((u16::MAX, u16::MAX), 1.0),
+	];
+
+	for coord in coordinates {
+		println!(
+			"{}\t{:?} → {}",
+			if map(coord.0.0, coord.0.1) == coord.1 {
+				"OK".green().bold()
+			} else {
+				"KO".red().bold()
+			},
+			coord.0,
+			map(coord.0.0, coord.0.1)
 		);
 	}
 }

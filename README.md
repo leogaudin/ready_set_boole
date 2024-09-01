@@ -15,6 +15,8 @@
   - [07 - SAT](#07---sat) 🧩
   - [08 - Powerset](#08---powerset) 🔋
   - [09 - Set Evaluation](#09---set-evaluation) 🧾
+  - [10 - Curve](#10---curve) 📈
+  - [11 - Inverse function](#11---inverse-function) 🔄
 - [Resources](#resources) 📖
 
 # Exercises
@@ -878,6 +880,38 @@ Now that we demystified those three operations, we know that our function will w
 3. **Evaluate the formula** for each set of values.
 4. **Apply the corresponding set operation** to the sets.
 
+## 10 - Curve
+
+```rust
+fn map(x: u16, y: u16) -> f64;
+```
+
+> You must write a function that takes as input two integers `x` and `y`, and returns a floating-point number that represents the value of the curve at the point `(x, y)`.
+>
+> You must write a function (the inverse of a space-filling curve, used to encode spatial data into a line) that takes a pair of coordinates in two dimensions and assigns a unique value in the closed interval [0; 1] ∈ R.
+>
+> Let f be a function and let A be a set such as:
+>
+> $$
+> f : (x, y) \in [[0; 2^{16} - 1]]^2 \subset \mathbb{N}^2 \rightarrow [0; 1] \subset \mathbb{R}
+> $$
+> $$
+> A \subset [0; 1] \subset \mathbb{R}
+> $$
+
+---
+
+It is easy to get frightened by the mathematical notation, but the instructions are actually quite simple:
+
+- The function that takes two integers `x` and `y` comprised between $0$ and $2^{16} - 1$, in the set of natural numbers.
+- It returns a floating-point number $A$, comprised between $0$ and $1$, in the set of real numbers.
+
+To do this, we can use binary once again.
+
+We know that the two inputs will not exceed $2^{16}$ each, so we can concatenate them to form a single number of $32$ bits.
+
+> 💡 We can use the `u32` type to store this number.
+
 # Resources
 
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)
@@ -894,3 +928,5 @@ Now that we demystified those three operations, we know that our function will w
 ---
 - [📺 Power Set](https://www.youtube.com/watch?v=FOQn8afAvLE)
 - [📺 Generate Power set for a given set](https://www.youtube.com/watch?v=8xQXq5JLhEY) (bitwise way)
+---
+- [📚 jmcheon/ready_set_boole/ex10_11](https://github.com/jmcheon/ready_set_boole/tree/main?tab=readme-ov-file#ex10_11)
