@@ -809,6 +809,73 @@ Moreover, going from $0$ to $2^n - 1$ in binary will give us all the possible co
 
 And that's it! We have our powerset.
 
+## 09 - Set Evaluation
+
+```rust
+fn eval_set(formula: &str, sets: Vec<Vec<i32>>) -> Vec<i32>;
+```
+
+> You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, and a list of sets (each containing numbers), then evaluates this list and returns the resulting set.
+
+---
+
+Once again, the subject is not very clear, but it is actually quite simple.
+
+### Link between Logic and Set Theory
+
+> This is extracted from the subject, and will help you understand the exercise.
+
+The following logical operations have a counterpart in set theory (they are not the only operations that exist though):
+
+<center>
+
+Boolean Algebra | Boolean Algebra name | Set Theory | Set Theory name
+--- | --- | --- | ---
+$\neg A$ | Negation (NOT) | $A^c$ | Complement
+$A \vee B$ | Disjunction (OR) | $A \cup B$ | Union
+$A \wedge B$ | Conjunction (AND) | $A \cap B$ | Intersection
+
+</center>
+
+#### Negation
+
+Let's take the set `[1, 2, 3]`.
+
+The complement of this set is the set of all the numbers that are not in the set.
+
+If we are working with the universal set of all integers, the complement of `[1, 2, 3]` is $[-\infty, 0] \cup [4, +\infty]$.
+
+> **Any number that is not in the set** is in the complement.
+>
+> So technically, the complement of the set is infinite, but the subject specifies that ***the globally encompassing set is considered to be the union of all the sets given as parameters***."
+>
+>
+
+#### Disjunction
+
+Let's take the sets `[1, 2, 3]` and `[4, 5, 6]`.
+
+The **union** of these two sets is `[1, 2, 3, 4, 5, 6]`.
+
+> **Any number that is in at least one of the sets** is in the union.
+
+#### Conjunction
+
+Let's take the sets `[1, 2, 3]` and `[2, 3, 4]`.
+
+The **intersection** of these two sets is `[2, 3]`.
+
+> **Any number that is in both sets** is in the intersection.
+
+### Implementation
+
+Now that we demystified those three operations, we know that our function will work exactly like the boolean evaluation function, but with different behaviors for `!`, `|`, and `&`.
+
+1. **Convert the formula to CNF**.
+2. **Parse the formula** to build the binary tree.
+3. **Evaluate the formula** for each set of values.
+4. **Apply the corresponding set operation** to the sets.
+
 # Resources
 
 - [📺 Add Two Numbers Without The "+" Sign (Bit Shifting Basics)](https://www.youtube.com/watch?v=qq64FrA2UXQ)

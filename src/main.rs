@@ -31,6 +31,9 @@ use ex07::sat;
 mod ex08;
 use ex08::powerset;
 
+mod ex09;
+use ex09::eval_set;
+
 fn main() {
 	println!("\n{}", "EX00 - ADDER".bold());
 	for _ in 0..42 {
@@ -266,6 +269,7 @@ fn main() {
 	println!("\n{}", "EX08 - POWERSET".bold());
 	let sets: Vec<Vec<i32>> = vec![
 		vec![1, 2, 3],
+		vec![],
 		// vec![1, 2, 3, 4],
 		// vec![1, 2, 3, 4, 5],
 		// vec![1, 2, 3, 4, 5, 6],
@@ -281,6 +285,56 @@ fn main() {
 			println!("\t{:?}", subset);
 		}
 		println!();
+	}
+
+	println!("\n{}", "EX09 - EVAL SET".bold());
+	let sets: Vec<Vec<Vec<i32>>> = vec![
+		vec![
+			vec![0, 1, 2],
+			vec![0, 3, 4]
+		],
+		vec![
+			vec![0, 1, 2],
+			vec![3, 4, 5]
+		],
+		vec![
+			vec![0, 1, 2]
+		],
+		vec![
+			vec![0, 1, 2],
+			vec![3, 4, 5],
+			vec![6, 7, 3]
+		],
+		vec![
+			vec![42, 43],
+			vec![44, 45, 46],
+		],
+		vec![
+			vec![42, 43],
+			vec![44, 45, 46],
+		],
+	];
+	let formulas: Vec<(&str, Vec<i32>)> = vec![
+		("AB&", vec![0]),
+		("AB|", vec![0, 1, 2, 3, 4, 5]),
+		("A!", vec![]),
+		("A!", vec![3, 4, 5, 6, 7]),
+		("A!B!|", vec![42, 43, 44, 45, 46]),
+		("A!B!&", vec![]),
+	];
+
+	for (i, formula) in formulas.iter().enumerate() {
+		println!(
+			"{}\t{}\t{:?} → {:?}",
+			if eval_set(formula.0, sets[i].clone()) == formula.1 {
+				"OK".green().bold()
+			} else {
+				"KO".red().bold()
+			},
+			formula.0.bold(),
+			sets[i],
+			eval_set(formula.0, sets[i].clone()),
+		);
 	}
 }
 
