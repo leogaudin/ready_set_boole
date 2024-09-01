@@ -12,7 +12,7 @@ fn is_valid_formula(formula: &str) -> bool {
 	return true;
 }
 
-fn get_variables(formula: &str) -> Vec<char> {
+pub fn get_variables(formula: &str) -> Vec<char> {
 	let formula_chars: Vec<char> = formula.chars().collect();
 	let mut variables: Vec<char> = Vec::new();
 

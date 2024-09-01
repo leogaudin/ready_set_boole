@@ -1,4 +1,4 @@
-use crate::{ex04::get_variables, ex05::tree_to_nnf, ex06::conjunctive_normal_form, tree::{create_tree, NodeValue, TreeNodeRef}};
+use crate::{ex04::get_variables, ex06::conjunctive_normal_form, tree::{create_tree, NodeValue, TreeNodeRef}};
 
 fn get_union(sets: Vec<Vec<i32>>) -> Vec<i32> {
 	let mut result: Vec<i32> = vec![];
