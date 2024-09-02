@@ -73,26 +73,26 @@ impl TreeNode {
 	}
 }
 
-pub fn print_tree(node: TreeNodeRef) {
-	let node = node.borrow();
-	match node.get_val() {
-		Some(NodeValue::Value(value)) => print!("{}", value),
-		Some(NodeValue::Variable(variable)) => print!("{}", variable),
-		Some(NodeValue::Operator('!')) => {
-			print!("!(");
-			print_tree(node.get_left().unwrap());
-			print!(")");
-		}
-		Some(NodeValue::Operator(operator)) => {
-			print!("(");
-			print_tree(node.get_left().unwrap());
-			print!("{}", operator);
-			print_tree(node.get_right().unwrap());
-			print!(")");
-		}
-		None => panic!("Node has no value"),
-	}
-}
+// pub fn print_tree(node: TreeNodeRef) {
+// 	let node = node.borrow();
+// 	match node.get_val() {
+// 		Some(NodeValue::Value(value)) => print!("{}", value),
+// 		Some(NodeValue::Variable(variable)) => print!("{}", variable),
+// 		Some(NodeValue::Operator('!')) => {
+// 			print!("!(");
+// 			print_tree(node.get_left().unwrap());
+// 			print!(")");
+// 		}
+// 		Some(NodeValue::Operator(operator)) => {
+// 			print!("(");
+// 			print_tree(node.get_left().unwrap());
+// 			print!("{}", operator);
+// 			print_tree(node.get_right().unwrap());
+// 			print!(")");
+// 		}
+// 		None => panic!("Node has no value"),
+// 	}
+// }
 
 pub fn create_tree(expression: &str) -> TreeNodeRef {
 	let mut stack: Vec<TreeNodeRef> = Vec::new();
