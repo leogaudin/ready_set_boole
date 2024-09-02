@@ -37,6 +37,16 @@ fn adder(a: u32, b: u32) -> u32;
 > - `=` (assignment)
 > - `==`, `!=`, `<`, `>`, `<=`, `>=` (comparison)
 
+### ⚠️ Maximum complexity
+
+- **Space**: $O(1)$
+
+- **Time**: $O(1)$
+
+This means that your function should execute roughly the same number of operations, regardless of the size of the numbers.
+
+> By *size* we don't mean the number of bits, but the actual value of the numbers.
+
 ---
 
 If we really simplify this exercise, it basically asks us to add two numbers in **base 10**, using only operations from **base 2**.
@@ -294,9 +304,15 @@ fn multiplier(a: u32, b: u32) -> u32;
 > - `=` (assignment)
 > - `==`, `!=`, `<`, `>`, `<=`, `>=` (comparison)
 
+### ⚠️ Maximum complexity
+
+- **Space**: $O(1)$
+
+- **Time**: $O(1)$
+
 ---
 
-### Quick and dirty solution
+### Dirty solution
 
 If you are not familiar with bitwise operations, you might be tempted to use a loop to add `a` to a result `b` times.
 
@@ -312,13 +328,13 @@ pub fn multiplier(a: u32, b: u32) -> u32 {
 }
 ```
 
-This works. Literally. You can submit it.
+This works. Everything goes well.
 
-However, it has a complexity of $O(b)$.
+However, it has a complexity of $O(n)$.
 
-> i.e. it takes $b$ iterations to complete.
+> i.e. it takes $n$ iterations to complete.
 >
-> We are working with `u32`, so the worst case scenario is $O(2^{32}) = O(4 294 967 296)$.
+> We are working with `u32`, so the worst case scenario is $2^{32}$ iterations = $4 294 967 296$.
 
 ### Bitwise solution
 
@@ -422,9 +438,7 @@ All good! We can see that the result is indeed equal to $13 * 11$.
 
 We now have our clean solution!
 
-> Note how we passed from a complexity of $O(b)$ to $O(n^2)$, where $n$ is the number of bits of `b`.
->
-> We are working with `u32`, so the worst case scenario is $O(32^2) = O(1024)$.
+> We are working with `u32`, so the worst case scenario is $32^2$ iterations = $1024$.
 >
 > $4294967296 / 1024 = 4194304$, literally 4 million times faster.
 
@@ -485,6 +499,16 @@ fn eval_formula(formula: &str) -> bool;
 ```
 
 > You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, evaluates this formula, then returns the result.
+
+### ⚠️ Maximum complexity
+
+- **Space**: $O(n)$
+
+- **Time**: $O(n)$
+
+This means that, for an input $x$ times bigger, the execution time will execute around $x$ times more instructions.
+
+> Unless you really implement a bad solution, the execution time should be linear in any case here.
 
 ---
 
@@ -558,6 +582,13 @@ fn print_truth_table(formula: &str);
 > You must write a function that takes as input a string that contains a propositional formula in reverse polish notation, and writes its truth table on the standard output.
 >
 > A formula can have up to 26 distinct variables (A...Z), one per letter. Each variable can be used several times.
+
+
+### ⚠️ Maximum complexity
+
+- **Space**: $O(2^n)$
+
+- **Time**: $O(2^n)$
 
 ---
 
@@ -743,6 +774,13 @@ fn sat(formula: &str) -> bool;
 >
 > The function has to determine if there is at least one combination of values for each variable of the given formula that makes the result be ⊤. If such a combination exists, the function returns `true`, otherwise, it returns `false`.
 
+
+### ⚠️ Maximum complexity
+
+- **Space**: $O(2^n)$
+
+- **Time**: $O(2^n)$
+
 ---
 
 This exercise may sound complex, but you already have all the tools to solve it since exercise 04.
@@ -763,6 +801,12 @@ fn powerset(set: Vec<i32>) -> Vec<Vec<i32>>;
 ```
 
 > You must write a function that takes as input a set of integers, and returns its powerset.
+
+### ⚠️ Maximum complexity
+
+- **Space**: $O(2^n)$
+
+- **Time**: $O(2^n)$
 
 ---
 
