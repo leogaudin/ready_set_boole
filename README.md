@@ -506,7 +506,7 @@ fn eval_formula(formula: &str) -> bool;
 
 - **Time**: $O(n)$
 
-This means that, for an input $x$ times bigger, the execution time will execute around $x$ times more instructions.
+This means that, for an input $x$ times bigger, the function will execute around $x$ times more instructions.
 
 > Unless you really implement a bad solution, the execution time should be linear in any case here.
 
