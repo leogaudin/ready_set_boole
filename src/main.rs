@@ -13,7 +13,6 @@ mod ex10;
 mod ex11;
 
 use colored::Colorize;
-use rand::RngCore;
 // use tree::{print_tree, tree_to_rpn, TreeNodeRef};
 use ex00::adder;
 use ex01::multiplier;
@@ -29,66 +28,69 @@ use ex10::map;
 use ex11::reverse_map;
 
 fn main() {
-	chrono(test_ex00_adder);
-	chrono(test_ex01_multiplier);
-	chrono(test_ex02_gray_code);
-	chrono(test_ex03_eval_formula);
-	chrono(test_ex04_truth_table);
-	chrono(test_ex05_negation_normal_form);
-	chrono(test_ex06_conjunctive_normal_form);
-	chrono(test_ex07_sat);
-	chrono(test_ex08_powerset);
-	chrono(test_ex09_eval_set);
-	chrono(test_ex10_map);
-	chrono(test_ex11_reverse_map);
-}
-
-fn chrono<F>(f: F)
-where
-	F: Fn(),
-{
-	let start: std::time::Instant = std::time::Instant::now();
-	f();
-	let duration = start.elapsed();
-	println!("\x1b[1mTest executed in {:?}\x1b[0m", duration);
+	test_ex00_adder();
+	test_ex01_multiplier();
+	test_ex02_gray_code();
+	test_ex03_eval_formula();
+	test_ex04_truth_table();
+	test_ex05_negation_normal_form();
+	test_ex06_conjunctive_normal_form();
+	test_ex07_sat();
+	test_ex08_powerset();
+	test_ex09_eval_set();
+	test_ex10_map();
+	test_ex11_reverse_map();
 }
 
 fn test_ex00_adder() {
 	println!("\n{}", "EX00 - ADDER".bold());
-	for _ in 0..42 {
-		let mut generator = rand::thread_rng();
-		let a: u32 = generator.next_u32() / 2;
-		let b: u32 = generator.next_u32() / 2;
+	let pairs: Vec<(u32, u32, u32)> = vec![
+		(0, 0, 0),
+		(1, 0, 1),
+		(0, 1, 1),
+		(1, 1, 2),
+		(1, 2, 3),
+		(2, 2, 4),
+		(42, 42, 84),
+	];
+	for pair in pairs {
 		println!(
 			"{}\t{} + {} = {}",
-			if adder(a, b) == a + b {
+			if adder(pair.0, pair.1) == pair.2 {
 				"OK".green().bold()
 			} else {
 				"KO".red().bold()
 			},
-			a,
-			b,
-			adder(a, b),
+			pair.0,
+			pair.1,
+			adder(pair.0, pair.1),
 		);
 	}
 }
 
 fn test_ex01_multiplier() {
 	println!("\n{}", "EX01 - MULTIPLIER".bold());
-	for _ in 0..42 {
-		let mut generator = rand::thread_rng();
-		let a: u32 = generator.next_u32() / std::u16::MAX as u32;
-		let b: u32 = generator.next_u32() / std::u16::MAX as u32;
+	let pairs: Vec<(u32, u32, u32)> = vec![
+		(0, 0, 0),
+		(1, 0, 0),
+		(0, 1, 0),
+		(1, 1, 1),
+		(1, 2, 2),
+		(2, 2, 4),
+		(42, 42, 1764),
+	];
+
+	for pair in pairs {
 		println!(
 			"{}\t{} * {} = {}",
-			if multiplier(a, b) == a * b {
+			if multiplier(pair.0, pair.1) == pair.2 {
 				"OK".green().bold()
 			} else {
 				"KO".red().bold()
 			},
-			a,
-			b,
-			multiplier(a, b),
+			pair.0,
+			pair.1,
+			multiplier(pair.0, pair.1),
 		);
 	}
 }
@@ -126,16 +128,31 @@ fn test_ex02_gray_code() {
 fn test_ex03_eval_formula() {
 	println!("\n{}", "EX03 - BOOLEAN EVALUATION".bold());
 	let formulas: Vec<(&str, bool)> = vec![
-		("10&", false),
+		("0!", true),
+		("1!", false),
+		("00|", false),
 		("10|", true),
+		("01|", true),
+		("11|", true),
+		("10&", false),
+		("11&", true),
+		("11^", false),
+		("10^", true),
+		("00>", true),
+		("01>", true),
+		("10>", false),
 		("11>", true),
+		("00=", true),
+		("11=", true),
 		("10=", false),
-		("1011||=", true),
-		("1!0=", true),
-		("10&!", true),
-		("00&1|", true),
-		("10&0|", false),
+		("01=", false),
 		("11&0|", true),
+		("10&1|", true),
+		("11&1|", true),
+		("11&1|1^", false),
+		("01&1|1=", true),
+		("01&1&1&", false),
+		("0111&&&", false),
 	];
 	for formula in formulas {
 		println!(
@@ -154,8 +171,17 @@ fn test_ex03_eval_formula() {
 fn test_ex04_truth_table() {
 	println!("\n{}", "EX04 - TRUTH TABLE".bold());
 	let formulas: Vec<&str> = vec![
-		"AB1&|", "AB&C|", "ABZK||=", "1WAH1|&&&",
-		// "ABCDEFGHIJKLMNOPQRSTUVWXYZ&|&|&|&|&|&",
+		"A",
+		"A!",
+		"AB|",
+		"AB&",
+		"AB^",
+		"AB>",
+		"AB=",
+		"AA=",
+		"ABC==",
+		"AB>C>",
+		"AB>A>A>",
 	];
 
 	for formula in formulas {
@@ -167,117 +193,106 @@ fn test_ex04_truth_table() {
 fn test_ex05_negation_normal_form() {
 	println!("\n{}", "EX05 - NEGATION NORMAL FORM".bold());
 	let formulas: Vec<&str> = vec![
-		// Subject
-		"AB&!",   // → A!B!|
-		"AB|!",   // → A!B!&
-		"AB>",    // → A!B|
-		"AB=",    // → AB&A!B!&|
-		"AB|C&!", // → A!B!&C!|
-		// Double negation
-		"A!!B!!|C&!!",
-		"A!!B!!C!!&&",
-		"A!!B!!1|&",
-		// Equivalence
-		"AB=",
-		"AD&BE&=",
-		"AB&CD&=",
-		// Material condition
-		"AB>",
-		"AB=",
-		// De Morgan
-		"AB|C&!",
-		"AB&C|!",
-		// Negation position
-		"AB&!C|!",
-		"AB&CD&!E|&F|!",
+		"A",
+		"A!",
+		"AB&!",
+		"AB|!",
+		"AB>!",
+		"AB=!",
+		"ABC||",
+		"ABC||!",
+		"ABC|&",
+		"ABC&|",
+		"ABC&|!",
+		"ABC^^",
+		"ABC>>",
 	];
 
 	for formula in formulas {
 		let nnf: String = negation_normal_form(formula);
 		let allowed: Vec<char> = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01&|!".chars().collect();
-		println!(
-			"{}",
+		print!(
+			"{}\t",
 			if generate_truth_table(formula) != generate_truth_table(nnf.as_str()) {
-				"TRUTH TABLES KO".red().bold()
+				"TT KO".red().bold()
 			} else {
-				"TRUTH TABLES OK".green().bold()
+				"TT OK".green().bold()
 			},
 		);
-		println!(
-			"{}",
+		print!(
+			"{}\t\t",
 			if !(nnf.as_str().chars().all(|c| allowed.contains(&c))) {
-				"NORMALIZATION KO".red().bold()
+				"NNF KO".red().bold()
 			} else {
-				"NORMALIZATION OK".green().bold()
+				"NNF OK".green().bold()
 			},
 		);
 
-		println!("Formula: {}", formula.bold());
-		println!("RPN output: {}", nnf.as_str().bold());
-		// print!("Tree: ");
-		// print_tree(nnf);
-		// println!();
-		println!();
+		println!("{}\t→\t{}", formula.bold(), nnf.bold());
 	}
 }
 
 fn test_ex06_conjunctive_normal_form() {
 	println!("\n{}", "EX06 - CONJUNCTIVE NORMAL FORM".bold());
 	let formulas: Vec<&str> = vec![
-		// Subject
-		"AB&!",    // → A!B!|
-		"AB|!",    // → A!B!&
-		"AB|C&",   // → AB|C&
-		"AB|C|D|", // → ABCD|||
-		"AB&C&D&", // → ABCD&&&
-		"AB&!C!|", // → A!B!C!||
-		"AB|!C!&", // → A!B!C!&&
-		// Random
-		"AB&C|", // → BC|AC|&
-		"AB&CD&|",
-		"AB&CD&|EF&|",
-		"AB&CD&|EF&|GH&|",
-		"AB&CD&|EF&|GH&|IJ&|!",
-		"AA!^BB!^^",
+		"A",
+		"A!",
+		"AB&!",
+		"AB|!",
+		"AB>!",
+		"AB=!",
+		"ABC||",
+		"ABC||!",
+		"ABC|&",
+		"ABC&|",
+		"ABC&|!",
+		"ABC^^",
+		"ABC>>",
 	];
 
 	for formula in formulas {
 		let cnf: String = conjunctive_normal_form(formula);
-		println!(
-			"{}",
+		print!(
+			"{}\t",
 			if generate_truth_table(formula) != generate_truth_table(cnf.as_str()) {
-				"TRUTH TABLES KO".red().bold()
+				"TT KO".red().bold()
 			} else {
-				"TRUTH TABLES OK".green().bold()
+				"TT OK".green().bold()
 			},
 		);
 
-		println!(
-			"{}",
+		print!(
+			"{}\t\t",
 			if check_conjunctions(cnf.as_str()) {
-				"CONJUNCTIONS OK".green().bold()
+				"CNF OK".green().bold()
 			} else {
-				"CONJUNCTIONS KO".red().bold()
+				"CNF KO".red().bold()
 			},
 		);
 
-		println!("Formula: {}", formula.bold());
-		println!("RPN output: {}", conjunctive_normal_form(formula).bold());
-		println!();
+		println!("{}\t→\t{}", formula.bold(), conjunctive_normal_form(formula).bold());
 	}
 }
 
 fn test_ex07_sat() {
 	println!("\n{}", "EX07 - SAT".bold());
-	let large: String = conjunctive_normal_form("AA!^BB!^^");
+
 	let formulas: Vec<(&str, bool)> = vec![
-		("AB|", true),
-		("AB&", true),
+		("A", true),
+		("A!", true),
+		("AA|", true),
+		("AA&", true),
 		("AA!&", false),
 		("AA^", false),
-		("AA!&BB!&|", false),
-		("AA!^BB!^^", false),
-		(large.as_str(), false),
+		("AB^", true),
+		("AB=", true),
+		("AA>", true),
+		("AA!>", true),
+		("ABC||", true),
+		("AB&A!B!&&", false),
+		("ABCDE&&&&", true),
+		("AAA^^", true),
+		("ABCDE^^^^", true),
 	];
 
 	for formula in formulas {
@@ -301,15 +316,10 @@ fn test_ex07_sat() {
 fn test_ex08_powerset() {
 	println!("\n{}", "EX08 - POWERSET".bold());
 	let sets: Vec<Vec<i32>> = vec![
-		vec![1, 2, 3],
 		vec![],
-		// vec![1, 2, 3, 4],
-		// vec![1, 2, 3, 4, 5],
-		// vec![1, 2, 3, 4, 5, 6],
-		// vec![1, 2, 3, 4, 5, 6, 7],
-		// vec![1, 2, 3, 4, 5, 6, 7, 8],
-		// vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
-		// vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		vec![0],
+		vec![0, 1],
+		vec![0, 1, 2],
 	];
 
 	for set in sets {
@@ -323,21 +333,50 @@ fn test_ex08_powerset() {
 
 fn test_ex09_eval_set() {
 	println!("\n{}", "EX09 - EVAL SET".bold());
+
 	let sets: Vec<Vec<Vec<i32>>> = vec![
-		vec![vec![0, 1, 2], vec![0, 3, 4]],
-		vec![vec![0, 1, 2], vec![3, 4, 5]],
-		vec![vec![0, 1, 2]],
-		vec![vec![0, 1, 2], vec![3, 4, 5], vec![6, 7, 3]],
-		vec![vec![42, 43], vec![44, 45, 46]],
-		vec![vec![42, 43], vec![44, 45, 46]],
+		vec![vec![]],
+		vec![vec![]],
+		vec![vec![42]],
+		vec![vec![42]],
+		vec![vec![1, 2, 3], vec![2, 3, 4]],
+		vec![vec![0, 1, 2], vec![]],
+		vec![vec![0, 1, 2], vec![]],
+		vec![vec![0, 1, 2], vec![0]],
+		vec![vec![0, 1, 2], vec![42]],
+		vec![vec![0, 1, 2], vec![0]],
+		vec![vec![0], vec![0, 1, 2]],
+		vec![vec![0], vec![1, 2]],
+		vec![vec![], vec![], vec![]],
+		vec![vec![0], vec![1], vec![2]],
+		vec![vec![0], vec![0], vec![0]],
+		vec![vec![0], vec![0], vec![]],
+		vec![vec![0], vec![0], vec![0]],
+		vec![vec![0], vec![0], vec![0]],
+		vec![vec![0], vec![0], vec![0]],
+		vec![vec![0], vec![0], vec![0]],
 	];
+
 	let formulas: Vec<(&str, Vec<i32>)> = vec![
-		("AB&", vec![0]),
-		("AB|", vec![0, 1, 2, 3, 4, 5]),
+		("A", vec![]),
 		("A!", vec![]),
-		("A!", vec![3, 4, 5, 6, 7]),
-		("A!B!|", vec![42, 43, 44, 45, 46]),
-		("A!B!&", vec![]),
+		("A", vec![42]),
+		("A!", vec![]),
+		("A!B&", vec![4]),
+		("AB|", vec![0, 1, 2]),
+		("AB&", vec![]),
+		("AB&", vec![0]),
+		("AB&", vec![]),
+		("AB^", vec![1, 2]),
+		("AB>", vec![0, 1, 2]),
+		("AB>", vec![1, 2]),
+		("ABC||", vec![]),
+		("ABC||", vec![0, 1, 2]),
+		("ABC||", vec![0]),
+		("ABC&&", vec![]),
+		("ABC&&", vec![0]),
+		("ABC^^", vec![0]),
+		("ABC>>", vec![0]),
 	];
 
 	for (i, formula) in formulas.iter().enumerate() {
@@ -380,23 +419,23 @@ fn test_ex10_map() {
 
 fn test_ex11_reverse_map() {
 	println!("\n{}", "EX11 - INVERSE FUNCTION".bold());
-	let coordinates: Vec<((u16, u16), f64)> = vec![
-		((0, 0), 0.0),
-		((124, 5345), 0.0018933343239811561),
-		((42141, 5543), 0.6430219206127855),
-		((u16::MAX, u16::MAX), 1.0),
+	let coordinates: Vec<(u16, u16)> = vec![
+		(0, 0),
+		(124, 5345),
+		(42141, 5543),
+		(u16::MAX, u16::MAX)
 	];
 
 	for coord in &coordinates {
 		println!(
-			"{}\t{} → {:?}",
-			if reverse_map(coord.1) == (coord.0 .0, coord.0 .1) {
+			"{}\t{:?} == {:?}",
+			if reverse_map(map(coord.0, coord.1)) == (coord.0, coord.1) {
 				"OK".green().bold()
 			} else {
 				"KO".red().bold()
 			},
-			coord.1,
-			reverse_map(coord.1)
+			reverse_map(map(coord.0, coord.1)),
+			(coord.0, coord.1)
 		);
 	}
 }
