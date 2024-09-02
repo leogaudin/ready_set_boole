@@ -586,8 +586,6 @@ fn print_truth_table(formula: &str);
 
 ### ⚠️ Maximum complexity
 
-- **Space**: $O(2^n)$
-
 - **Time**: $O(2^n)$
 
 ---
@@ -776,8 +774,6 @@ fn sat(formula: &str) -> bool;
 
 
 ### ⚠️ Maximum complexity
-
-- **Space**: $O(2^n)$
 
 - **Time**: $O(2^n)$
 
