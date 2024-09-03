@@ -891,7 +891,7 @@ If we are working with the universal set of all integers, the complement of `[1,
 
 > **Any number that is not in the set** is in the complement.
 >
-> So technically, the complement of the set is infinite, but the subject specifies that ***the globally encompassing set is considered to be the union of all the sets given as parameters***."
+> So technically, the complement of the set is infinite, but the subject specifies that ***the globally encompassing set is considered to be the union of all the sets given as parameters***.
 >
 >
 
