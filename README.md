@@ -1,3 +1,8 @@
+<div align='center'>
+	<h1>ready_set_boole</h1>
+	<img src="https://img.shields.io/badge/-100%2F100-success?logo=42&logoColor=fff" />
+</div>
+
 **`ready_set_boole` is a 42 project introducing the basics of boolean algebra**.
 
 > **⚠️ This guide assumes you are already an experienced programmer, and are familiar with classic data structures (i.e. stacks and binary trees).**
